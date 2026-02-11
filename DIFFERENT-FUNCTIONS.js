@@ -73,3 +73,36 @@ const Persona2 = (nombre) => {
   // ❌ MAL: arrow no sirve como constructor.
 };
 // const p2 = new Persona2("Ana"); // ❌ TypeError
+
+/************************************************************
+  REGULAR FUNCTION (normal)
+************************************************************/
+function oddOrEven(num) {
+  // ✅ BIEN: function normal para una función “normal” reutilizable.
+  if (num % 2 === 0) {
+    console.log(`${num} is even`);
+  } else {
+    console.log(`${num} is odd`);
+  }
+}
+
+// Examples
+oddOrEven(7);  // 7 is odd
+oddOrEven(12); // 12 is even
+
+
+/************************************************************
+  ARROW FUNCTION (=>)
+************************************************************/
+const oddOrEvenArrow = (num) => {
+  // ✅ BIEN: arrow es perfecto para funciones cortas.
+  if (num % 2 === 0) {
+    console.log(`${num} is even`);
+  } else {
+    console.log(`${num} is odd`);
+  }
+};
+
+// Examples
+oddOrEvenArrow(7);  // 7 is odd
+oddOrEvenArrow(12); // 12 is even
