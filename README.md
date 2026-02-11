@@ -1,12 +1,12 @@
 # 📚 Repositorio de Tareas — Universidad
 
-¡Hola! 👋 Soy **Manuel Jose Betancurt Pérez** y este repositorio está destinado a centralizar y organizar mis **tareas y entregas académicas**. Aquí iré subiendo ejercicios, proyectos cortos y actividades de clase, manteniendo un historial claro de versiones y avances para facilitar la revisión y el seguimiento de mi progreso. ✅✨
+¡Hola! 👋 Soy **Manuel Betancurt Pérez** y este repositorio está destinado a centralizar y organizar mis **tareas y entregas académicas**. Aquí iré subiendo ejercicios, proyectos cortos y actividades de clase de estructura de datos y algoritmos 2, manteniendo un historial claro de versiones y avances para facilitar la revisión y el seguimiento de mi progreso. ✅✨
 
 ---
 
 ## 👤 Información del estudiante
 
-- **Nombre:** Manuel Jose Betancurt Pérez 🧑‍🎓  
+- **Nombre:** Manuel Betancurt Pérez 🧑‍🎓  
 - **Código:** 2236320 🆔  
 - **Correo:** manuel.betancurt@uao.edu.co 📩  
 
@@ -22,19 +22,6 @@
 
 ---
 
-## ✅ Recomendación de organización
-
-💡 Sugerencia de estructura de carpetas:
-- `Materia/Actividad_01/`
-- `Materia/Actividad_02/`
-- `Materia/Proyecto/`
-
----
-
 ## 🚀 Estado del repositorio
 
 📍 **En progreso** — se irá actualizando constantemente con nuevas entregas. 🔄
-
----
-
-⭐ Si este repositorio te fue útil, ¡puedes dejar una estrella! 😄
