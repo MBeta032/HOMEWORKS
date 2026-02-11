@@ -1,7 +1,4 @@
-// =========================================================
 // TODAS LAS FUNCIONES DE ARRAYS EN JAVASCRIPT (apuntes míos)
-// Meta: que cada ejemplo sea entendible y NO tan típico.
-// =========================================================
 
 const invitados = ["Sofia", "Daniel", "Mateo"];
 console.log(invitados); // => ["Sofia", "Daniel", "Mateo"]
