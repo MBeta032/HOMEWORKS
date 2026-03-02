@@ -45,6 +45,61 @@ function ContactoList({ contactos }: ContactoListProps) {
   )
 }
 
+
+interface ContactoFormProps {
+  // onAdd va a ser "un botón invisible" que nos dará el componente padre
+  onAdd: (nombre: string, telefono:string) => void
+}
+
+function ContactoForm({ onAdd}: ContactoFormProps) {
+  // Por ahora NO usamos onAdd, solo lo recibimos y ya
+  const [nombre, setNombre] = useState("")
+  const [telefono, setTelefono] = useState("")
+
+  // Esta función se dispara cuando el formulario se "envía"
+   const handleSubmit = (e:React.FormEvent<HTMLFormElement>) => { 
+    e.preventDefault()
+
+  // evita que alguien agregue un nombre vacío tipo "   "
+    if (nombre.trim() === "" || telefono.trim() === "") {
+        return
+    }
+
+   // Es decir: "Papá (ContactoApp), toma estos datos y agrégalos"
+   onAdd(nombre,telefono)
+
+    // Limpiamos los inputs para que vuelvan a quedar vacíos
+   setNombre("")
+   setTelefono("")
+   
+   }
+
+
+
+   //onSubmit or onClick cualquiera funciona pero este permite enter y click
+    return (
+        <form onSubmit={handleSubmit}>
+            <div>
+                <label> Nombre </label>
+                <input 
+                value = {nombre}
+                onChange = {(e) => setNombre(e.target.value)}/>
+            </div>
+            <div>
+                <label>Teléfono</label>
+                <input 
+                value = {telefono}
+                onChange = {(e) => setTelefono(e.target.value)}/>
+                <p>{nombre} - {telefono}</p>
+            </div>
+            
+            <button type="submit">Agregar</button>
+        </form>
+    )
+}
+
+
+
 // Este es el componente principal de tu mini app de contactos
 export default function ContactoApp() {
   // useState(true) = creamos una "cajita" llamada cargando que empieza en true
@@ -72,6 +127,7 @@ export default function ContactoApp() {
       setCargando(false)
     }, 2000)
 
+
     // Esta función se llama cuando el componente se va clearTimeout evita que quede el timer "colgado"
     return () => clearTimeout(timer)
   }, [])
@@ -83,12 +139,25 @@ export default function ContactoApp() {
     return <p>Cargando...</p>
   }
 
+  const handleAddContacto = (nombre: string, telefono: string) => {
+    const nuevoContacto: Contacto = {
+        id: Date.now(),
+        nombre: nombre,
+        telefono: telefono
+    }
+
+    // prev = lista anterior
+    // ...prev = copia lo anterior
+    // , nuevoContacto = agrega al final
+    setContactos((prev) => [...prev, nuevoContacto])
+  }
+
   // Cuando cargando ya es false, mostramos la app normal
   return (
     <div>
       <h1>Agenda de Contactos</h1>
       <p>Contacto de ejemplo:</p>
-
+      <ContactoForm onAdd={handleAddContacto} />
       {/* 
         Aquí llamamos al componente ContactoList y le pasamos el arreglo por props.
       */}
