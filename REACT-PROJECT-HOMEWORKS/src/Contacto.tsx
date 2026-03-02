@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import "./contactos.css"
 
 // "interface" en TypeScript = un "molde" o "plantilla"
 // Esto NO crea datos, solo define la forma que deben tener los datos
@@ -17,15 +18,18 @@ interface ContactoItemProps {
 
 // Recibe "contacto" por props y lo muestra dentro de un <li>
 function ContactoItem({ contacto, onDelete }: ContactoItemProps) {
-  return (
-    <li>
-      {contacto.nombre} - {contacto.telefono}
-      {/* Cuando le doy click, llamo onDelete con el id de este contacto */}
-    <button onClick={() => onDelete(contacto.id)}>
-      Eliminar
-    </button>
+    return (
+    <li className="item">
+        <div className="item-info">
+        <span className="item-name">{contacto.nombre}</span>
+        <span className="item-phone">{contacto.telefono}</span>
+        </div>
+
+        <button className="btn btn-danger" onClick={() => onDelete(contacto.id)}>
+        Eliminar
+        </button>
     </li>
-  )
+    )
 }
 
 // Este componente de lista recibe TODO el arreglo de contactos
@@ -37,7 +41,7 @@ interface ContactoListProps {
 // ContactoList se encarga de recorrer el arreglo y pintar muchos ContactoItem
 function ContactoList({ contactos, onDelete }: ContactoListProps) {
   return (
-    <ul>
+    <ul className = "list">
       {/* 
         .map() = "por cada elemento del arreglo, crea algo"
         Aquí por cada contacto "c" creamos un <ContactoItem />
@@ -83,22 +87,28 @@ function ContactoForm({ onAdd}: ContactoFormProps) {
 
    //onSubmit or onClick cualquiera funciona pero este permite enter y click
     return (
-        <form onSubmit={handleSubmit}>
-            <div>
-                <label> Nombre </label>
-                <input 
-                value = {nombre}
-                onChange = {(e) => setNombre(e.target.value)}/>
+        <form className="form" onSubmit={handleSubmit}>
+            <div className="field">
+            <label className="label">Nombre</label>
+            <input
+                className="input"
+                value={nombre}
+                onChange={(e) => setNombre(e.target.value)}
+            />
             </div>
-            <div>
-                <label>Teléfono</label>
-                <input 
-                value = {telefono}
-                onChange = {(e) => setTelefono(e.target.value)}/>
-                <p>{nombre} - {telefono}</p>
+
+            <div className="field">
+            <label className="label">Teléfono</label>
+            <input
+                className="input"
+                value={telefono}
+                onChange={(e) => setTelefono(e.target.value)}
+            />
             </div>
-            
-            <button type="submit">Agregar</button>
+
+            <button className="btn btn-primary" type="submit">
+            Agregar
+            </button>
         </form>
     )
 }
@@ -164,15 +174,13 @@ export default function ContactoApp() {
    }
 
   // Cuando cargando ya es false, mostramos la app normal
-  return (
-    <div>
-      <h1>Agenda de Contactos</h1>
-      <p>Contacto de ejemplo:</p>
-      <ContactoForm onAdd={handleAddContacto} />
-      {/* 
-        Aquí llamamos al componente ContactoList y le pasamos el arreglo por props.
-      */}
-      <ContactoList contactos={contactos} onDelete={handleDeleteContacto}/>
+    return (
+    <div className="app">
+        <h1 className="title">Agenda de Contactos</h1>
+
+        <ContactoForm onAdd={handleAddContacto} />
+
+        <ContactoList contactos={contactos} onDelete={handleDeleteContacto} />
     </div>
-  )
+    )
 }
