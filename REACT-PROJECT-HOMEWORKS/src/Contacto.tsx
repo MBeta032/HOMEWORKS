@@ -12,13 +12,18 @@ interface Contacto {
 // Aquí ContactoItem recibe UN contacto para poder mostrarlo
 interface ContactoItemProps {
   contacto: Contacto
+  onDelete: (id:number) => void
 }
 
 // Recibe "contacto" por props y lo muestra dentro de un <li>
-function ContactoItem({ contacto }: ContactoItemProps) {
+function ContactoItem({ contacto, onDelete }: ContactoItemProps) {
   return (
     <li>
       {contacto.nombre} - {contacto.telefono}
+      {/* Cuando le doy click, llamo onDelete con el id de este contacto */}
+    <button onClick={() => onDelete(contacto.id)}>
+      Eliminar
+    </button>
     </li>
   )
 }
@@ -26,10 +31,11 @@ function ContactoItem({ contacto }: ContactoItemProps) {
 // Este componente de lista recibe TODO el arreglo de contactos
 interface ContactoListProps {
   contactos: Contacto[]
+  onDelete: (id: number) => void
 }
 
 // ContactoList se encarga de recorrer el arreglo y pintar muchos ContactoItem
-function ContactoList({ contactos }: ContactoListProps) {
+function ContactoList({ contactos, onDelete }: ContactoListProps) {
   return (
     <ul>
       {/* 
@@ -39,7 +45,7 @@ function ContactoList({ contactos }: ContactoListProps) {
         key={c.id} es obligatorio Es como la "placa" única para que React sepa cuál elemento es cuál
       */}
       {contactos.map((c) => (
-        <ContactoItem key={c.id} contacto={c} />
+        <ContactoItem key={c.id} contacto={c} onDelete={onDelete} />
       ))}
     </ul>
   )
@@ -71,7 +77,6 @@ function ContactoForm({ onAdd}: ContactoFormProps) {
     // Limpiamos los inputs para que vuelvan a quedar vacíos
    setNombre("")
    setTelefono("")
-   
    }
 
 
@@ -152,6 +157,12 @@ export default function ContactoApp() {
     setContactos((prev) => [...prev, nuevoContacto])
   }
 
+    const handleDeleteContacto = (id: number) => {
+  // prev = la lista anterior de contactos
+  // filter = devuelve una lista nueva sin el contacto cuyo id coincide
+    setContactos((prev) => prev.filter((c) => c.id !== id))
+   }
+
   // Cuando cargando ya es false, mostramos la app normal
   return (
     <div>
@@ -161,7 +172,7 @@ export default function ContactoApp() {
       {/* 
         Aquí llamamos al componente ContactoList y le pasamos el arreglo por props.
       */}
-      <ContactoList contactos={contactos} />
+      <ContactoList contactos={contactos} onDelete={handleDeleteContacto}/>
     </div>
   )
 }
