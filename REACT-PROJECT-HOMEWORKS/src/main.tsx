@@ -6,7 +6,7 @@ import Contador from './Contador.tsx'
 import Arreglos from './Arreglos.tsx'
 
 import './index.css'
-import ContactoApp from "./Contacto";
+import ContactoApp from "./CHALLENGE-02/ContactoApp";
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 
