@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { DoublyLinkedList } from "../doubly/DoublyLinkedList"
 import { DoubleNode } from "../doubly/DoubleNote"
+import "./../styles/history.css"
 
 const paginasFake = ["/home", "/search", "/product", "/cart"]
 
@@ -10,8 +11,6 @@ export default function HistoryPage() {
 
   useEffect(() => {
     const list = new DoublyLinkedList<string>()
-
-    // llenamos con datos fake (como pide la actividad) :contentReference[oaicite:6]{index=6}
     paginasFake.forEach((p) => list.append(p))
 
     setHistorial(list)
@@ -19,46 +18,50 @@ export default function HistoryPage() {
   }, [])
 
   const handleBack = () => {
-    // si no hay current, no hacemos nada
-    if (current === null) return
-
-    // si existe previous, voy hacia atrás
-    if (current.previous !== null) {
+    if (current !== null && current.previous !== null) {
       setCurrent(current.previous)
     }
   }
 
   const handleForward = () => {
-    if (current === null) return
-
-    // si existe next, voy hacia adelante
-    if (current.next !== null) {
+    if (current !== null && current.next !== null) {
       setCurrent(current.next)
     }
   }
 
   return (
-    <div style={{ padding: 16 }}>
-      <h2>Doubly Linked List - Historial navegador</h2>
+    <div className="historyPage">
+      <div className="browser">
+        <div className="browserTop">
+          <div className="circle" />
+          <div className="circle" />
+          <div className="circle" />
 
-      <p>
-        <strong>Estoy en:</strong> {current ? current.value : "Ninguna"}
-      </p>
+          <button className="navBtn" onClick={handleBack}>⟵</button>
+          <button className="navBtn" onClick={handleForward}>⟶</button>
 
-      <button onClick={handleBack}>Atrás</button>
-      <button onClick={handleForward}>Adelante</button>
+          <div className="addressBar">
+            {current ? current.value : "Ninguna"}
+          </div>
+        </div>
 
-      <hr />
+        <div className="browserBody">
+          <h2 className="historyTitle">Historial (Doubly Linked List)</h2>
 
-      {/* Esto solo es para ver las páginas fake con .map() */}
-      <p><strong>Paginas fake:</strong></p>
-      <ul>
-        {paginasFake.map((p) => (
-          <li key={p}>{p}</li>
-        ))}
-      </ul>
+          <p>
+            <strong>Print:</strong> {historial ? historial.print() : "..."}
+          </p>
 
-      <p><strong>Print historial:</strong> {historial ? historial.print() : "..."}</p>
+          <ul className="fakeList">
+            {paginasFake.map((p) => (
+              <li key={p} className="fakeItem">
+                <span>{p}</span>
+                <span className="badge">{current && current.value === p ? "actual" : ""}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
     </div>
   )
 }

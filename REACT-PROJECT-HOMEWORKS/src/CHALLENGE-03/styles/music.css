@@ -1,0 +1,176 @@
+.musicPage {
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.musicHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.musicTitle {
+  margin: 0;
+  font-size: 28px;
+}
+
+.musicSub {
+  margin: 0;
+  opacity: 0.85;
+}
+
+/* Buscador */
+.musicSearch {
+  display: flex;
+  gap: 10px;
+  margin: 14px 0 18px 0;
+}
+
+.musicInput {
+  flex: 1;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid #1e2a23;
+  background: #070b09;
+  color: #e7f6ee;
+  outline: none;
+}
+
+.musicInput:focus {
+  border-color: #1db954;
+  box-shadow: 0 0 0 3px rgba(29, 185, 84, 0.15);
+}
+
+.musicBtn {
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 0;
+  cursor: pointer;
+  font-weight: 800;
+  background: #1db954;
+  color: #07110a;
+}
+
+.musicBtn:hover {
+  filter: brightness(1.05);
+}
+
+.musicBtnSecondary {
+  background: #0b0f0d;
+  color: #e7f6ee;
+  border: 1px solid #1e2a23;
+}
+
+/* Layout: player + lista */
+.musicGrid {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 14px;
+}
+
+@media (max-width: 860px) {
+  .musicGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Player card */
+.playerCard {
+  background: linear-gradient(180deg, #0b0f0d, #070b09);
+  border: 1px solid #1e2a23;
+  border-radius: 16px;
+  padding: 16px;
+}
+
+.playerTop {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.cover {
+  width: 92px;
+  height: 92px;
+  border-radius: 14px;
+  background: #0b0f0d;
+  border: 1px solid #1e2a23;
+  object-fit: cover;
+}
+
+.playerInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.nowPlaying {
+  margin: 0;
+  font-weight: 900;
+}
+
+.artistLine {
+  margin: 0;
+  opacity: 0.85;
+}
+
+.playerActions {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.audioBox {
+  margin-top: 12px;
+}
+
+/* Lista de resultados */
+.resultsCard {
+  background: #070b09;
+  border: 1px solid #1e2a23;
+  border-radius: 16px;
+  padding: 12px;
+}
+
+.resultsTitle {
+  margin: 6px 6px 10px 6px;
+  font-weight: 900;
+}
+
+.resultsList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.resultItem {
+  border: 1px solid #1e2a23;
+  background: #0b0f0d;
+  border-radius: 14px;
+  padding: 10px 12px;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.resultLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.resultSong {
+  font-weight: 800;
+}
+
+.resultArtist {
+  opacity: 0.8;
+  font-size: 14px;
+}
+
+.resultActive {
+  border-color: #1db954;
+  box-shadow: 0 0 0 2px rgba(29, 185, 84, 0.12);
+}

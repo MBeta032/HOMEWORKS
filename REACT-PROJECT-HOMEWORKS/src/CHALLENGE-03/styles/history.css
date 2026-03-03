@@ -1,0 +1,83 @@
+.historyPage {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.browser {
+  border: 1px solid #273244;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #0f172a;
+}
+
+.browserTop {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  border-bottom: 1px solid #273244;
+  background: #0b1222;
+}
+
+.circle {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: #334155;
+}
+
+.navBtn {
+  border: 1px solid #273244;
+  background: #0f172a;
+  color: #e2e8f0;
+  padding: 10px 12px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.navBtn:hover {
+  filter: brightness(1.06);
+}
+
+.addressBar {
+  flex: 1;
+  border: 1px solid #273244;
+  background: #0f172a;
+  color: #e2e8f0;
+  padding: 10px 12px;
+  border-radius: 12px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.browserBody {
+  padding: 14px;
+}
+
+.historyTitle {
+  margin: 0 0 10px 0;
+  font-size: 22px;
+}
+
+.fakeList {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0 0 0;
+  display: grid;
+  gap: 8px;
+}
+
+.fakeItem {
+  border: 1px solid #273244;
+  background: #0b1222;
+  border-radius: 12px;
+  padding: 10px 12px;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.badge {
+  font-size: 12px;
+  opacity: 0.8;
+}
