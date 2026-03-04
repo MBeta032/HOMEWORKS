@@ -7,12 +7,13 @@ import Arreglos from './Arreglos.tsx'
 import ContactoApp from "./CHALLENGE-02/ContactoApp";
 import LinkedMusicPage from './CHALLENGE-03/pages/LinkedMusicPage.tsx'
 import Challenge03App from './CHALLENGE-03/Challenge03App.tsx'
+import StudentApp from './PRACTICA-01/StudentApp.tsx'
 
 
 import './index.css'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import StudentApp from './PRACTICA-01/StudentApp.tsx'
+import ProductApp from './PRACTICA-02/ProductApp.tsx'
 
 
 ReactDOM.createRoot(document.getElementById('root')!)
@@ -27,8 +28,9 @@ ReactDOM.createRoot(document.getElementById('root')!)
         <Arreglos/> 
         <ContactoApp />
         <LinkedMusicPage />
-        <Challenge03App /> */ }
-        <StudentApp />
+        <Challenge03App /> 
+        <StudentApp />*/ }
+        <ProductApp />
     </React.StrictMode> 
 
 )
