@@ -1,9 +1,9 @@
-import { useEffect, useRef, useState } from "react"
+import { useState, useEffect } from "react"
+
 import { ComiteDoubleCircularList } from "./Listas/ComiteCircularDoubleList"
 import { DoctorCircularList } from "./Listas/DoctorCircularList"
 import { PacienteLinkedList } from "./Listas/PacienteLinkedList"
 import { HistorialDoubleList } from "./Listas/HistorialDoubleList"
-import type { Pacientes } from "./types"
 
 import Paciente from "./Pacientes"
 import Doctor from "./Doctores"
@@ -35,18 +35,15 @@ export default function AppHospital() {
   const [historialList] = useState(new HistorialDoubleList())
   const [comiteList] = useState(new ComiteDoubleCircularList())
 
-  const [pacientesView, setPacientesView] = useState<Pacientes[]>([])
+  const [pacientesView, setPacientesView] = useState<any[]>([])
   const [pacienteCurrent, setPacienteCurrent] = useState(pacienteList.head)
 
   const [doctorCurrent, setDoctorCurrent] = useState(doctorList.current)
   const [historialCurrent, setHistorialCurrent] = useState(historialList.current)
   const [comiteCurrent, setComiteCurrent] = useState(comiteList.current)
 
-  const yaInicializo = useRef(false)
-  const [verListaPacientes, setVerListaPacientes] = useState(false)
-
   const cargarPacientes = () => {
-    const arr: Pacientes[] = []
+    const arr: any[] = []
     let temp = pacienteList.head
 
     while (temp !== null) {
@@ -58,9 +55,9 @@ export default function AppHospital() {
   }
 
   useEffect(() => {
-    if (yaInicializo.current) return
-    yaInicializo.current = true
+    if (pacienteList.length > 0 || doctorList.length > 0 || comiteList.length > 0) return
 
+    // PACIENTES
     for (let i = 0; i < pacientesFake.length; i = i + 1) {
       const p = pacientesFake[i]
       pacienteList.append(p.id, p.nombre, p.turno)
@@ -68,22 +65,24 @@ export default function AppHospital() {
     setPacienteCurrent(pacienteList.head)
     cargarPacientes()
 
+    // DOCTORES
     for (let i = 0; i < doctoresFake.length; i = i + 1) {
       const d = doctoresFake[i]
       doctorList.append(d.id, d.nombre, d.area)
     }
     setDoctorCurrent(doctorList.current)
 
+    // COMITE
     for (let i = 0; i < comiteFake.length; i = i + 1) {
       const c = comiteFake[i]
       comiteList.append(c.id, c.nombre, c.role)
     }
     setComiteCurrent(comiteList.current)
 
+    // HISTORIAL
     setHistorialCurrent(historialList.current)
   }, [])
 
-  // doctor cambia cada 10 segundos
   useEffect(() => {
     const timer = setInterval(() => {
       doctorList.next()
@@ -95,8 +94,12 @@ export default function AppHospital() {
 
   const nextPaciente = () => {
     if (pacienteCurrent === null) return
-    if (pacienteCurrent.next !== null) setPacienteCurrent(pacienteCurrent.next)
-    else setPacienteCurrent(pacienteList.head)
+
+    if (pacienteCurrent.next !== null) {
+      setPacienteCurrent(pacienteCurrent.next)
+    } else {
+      setPacienteCurrent(pacienteList.head)
+    }
   }
 
   const atender = () => {
@@ -124,11 +127,6 @@ export default function AppHospital() {
     setPacienteCurrent(pacienteList.head)
   }
 
-  const borrarSeleccionado = () => {
-    if (pacienteCurrent === null) return
-    borrarPaciente(pacienteCurrent.id)
-  }
-
   const nextDoctor = () => {
     doctorList.next()
     setDoctorCurrent(doctorList.current)
@@ -154,25 +152,23 @@ export default function AppHospital() {
     setComiteCurrent(comiteList.current)
   }
 
-  const currentPacienteView: Pacientes | null =
+  const currentPacienteSimple =
     pacienteCurrent === null
       ? null
       : { id: pacienteCurrent.id, nombre: pacienteCurrent.nombre, turno: pacienteCurrent.turno }
 
   return (
-    <div style={pageStyles.page}>
-      <h1 style={pageStyles.h1}>HOSPITAL</h1>
+    <div className="hospital-page">
+      <h1 className="hospital-title">HOSPITAL</h1>
 
-      <div style={pageStyles.grid}>
+      <div className="hospital-grid">
         <Paciente
-            current={currentPacienteView}
-            pacientes={pacientesView}
-            onNext={nextPaciente}
-            onAtender={atender}
-            onDelete={borrarPaciente}
-            showList={verListaPacientes}
-            onToggleList={() => setVerListaPacientes(!verListaPacientes)}
-            />
+          current={currentPacienteSimple}
+          pacientes={pacientesView}
+          onNext={nextPaciente}
+          onAtender={atender}
+          onDelete={borrarPaciente}
+        />
 
         <Doctor current={doctorCurrent} onNext={nextDoctor} />
 
@@ -182,19 +178,4 @@ export default function AppHospital() {
       </div>
     </div>
   )
-}
-
-const pageStyles: { [key: string]: React.CSSProperties } = {
-  page: {
-    minHeight: "100vh",
-    padding: 16,
-    background: "#05070f",
-  },
-  h1: { margin: 0, marginBottom: 14, color: "white", fontSize: 44, letterSpacing: 1 },
-  grid: {
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-    gap: 14,
-    alignItems: "start",
-  },
 }
