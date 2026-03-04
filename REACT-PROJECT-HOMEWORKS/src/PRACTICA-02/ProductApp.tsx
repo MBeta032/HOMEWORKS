@@ -6,7 +6,7 @@ import "./market.css"
 const productosFake = [
   { id: "p1", name: "Audífonos", price: 120000, image: "/products/audifonos.jpg" },
   { id: "p2", name: "Teclado", price: 180000, image: "/products/teclado.jpg" },
-  { id: "p3", name: "Mouse", price: 90000, image: "/products/mouse.jpg" },
+  { id: "p3", name: "Mouse", price: 90000, image: "/mouse.jpg" },
 ]
 
 export default function ProductApp (){

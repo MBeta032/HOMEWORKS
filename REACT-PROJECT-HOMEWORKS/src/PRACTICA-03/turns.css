@@ -1,0 +1,211 @@
+/* turns.css */
+:root {
+  --bg1: #070a14;
+  --bg2: #0b1020;
+  --card: rgba(15, 23, 42, 0.92);
+  --border: rgba(148, 163, 184, 0.18);
+  --text: #e2e8f0;
+  --muted: rgba(226, 232, 240, 0.65);
+  --input: rgba(2, 6, 23, 0.55);
+  --green: #22c55e;
+  --green2: #16a34a;
+  --blue: #60a5fa;
+}
+
+/* Fondo general */
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  color: var(--text);
+  background:
+    radial-gradient(900px 500px at 25% 20%, rgba(34, 197, 94, 0.16), transparent 60%),
+    radial-gradient(900px 500px at 75% 80%, rgba(96, 165, 250, 0.12), transparent 60%),
+    linear-gradient(180deg, var(--bg1), var(--bg2));
+  display: flex;
+  justify-content: center;
+  padding: 24px;
+}
+
+/* Contenedor app */
+.turn-app {
+  width: min(900px, 100%);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(8px);
+}
+
+/* Título */
+.turn-title {
+  margin: 0 0 14px 0;
+  font-size: 24px;
+  font-weight: 900;
+}
+
+/* Formulario */
+.turn-form {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: rgba(2, 6, 23, 0.22);
+  margin-bottom: 14px;
+}
+
+.turn-field {
+  flex: 1;
+  min-width: 180px;
+}
+
+.turn-label {
+  display: block;
+  margin: 0 0 6px 2px;
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 800;
+}
+
+.turn-input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--input);
+  color: var(--text);
+  outline: none;
+  font-size: 14px;
+}
+
+.turn-input::placeholder {
+  color: rgba(226, 232, 240, 0.35);
+}
+
+.turn-input:focus {
+  border-color: rgba(34, 197, 94, 0.75);
+  box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.15);
+}
+
+/* Botones */
+.turn-btn {
+  border: none;
+  cursor: pointer;
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-weight: 900;
+  font-size: 14px;
+  transition: transform 0.08s ease, filter 0.12s ease, box-shadow 0.12s ease;
+}
+
+.turn-btn:active {
+  transform: translateY(0);
+}
+
+.turn-btn-add {
+  background: linear-gradient(135deg, var(--green), var(--green2));
+  color: #052e16;
+  box-shadow: 0 14px 28px rgba(34, 197, 94, 0.18);
+}
+
+.turn-btn-add:hover {
+  filter: brightness(0.98);
+  transform: translateY(-1px);
+}
+
+/* Card del turno actual */
+.turn-card {
+  display: grid;
+  grid-template-columns: 140px 1fr auto;
+  gap: 14px;
+  align-items: center;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: rgba(2, 6, 23, 0.25);
+}
+
+.turn-badge {
+  height: 110px;
+  border-radius: 16px;
+  border: 1px dashed rgba(226, 232, 240, 0.22);
+  display: grid;
+  place-items: center;
+  background: radial-gradient(60% 60% at 50% 40%, rgba(34, 197, 94, 0.18), transparent 70%);
+}
+
+.turn-number {
+  font-size: 44px;
+  font-weight: 1000;
+  color: var(--text);
+}
+
+.turn-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.turn-name {
+  font-size: 20px;
+  font-weight: 950;
+}
+
+.turn-hint {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* Acciones */
+.turn-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.turn-btn-prev {
+  background: rgba(226, 232, 240, 0.08);
+  color: var(--text);
+  border: 1px solid rgba(226, 232, 240, 0.12);
+}
+
+.turn-btn-prev:hover {
+  filter: brightness(1.05);
+}
+
+.turn-btn-next {
+  background: rgba(96, 165, 250, 0.18);
+  color: var(--text);
+  border: 1px solid rgba(96, 165, 250, 0.30);
+}
+
+.turn-btn-next:hover {
+  filter: brightness(1.05);
+}
+
+/* Estado vacío */
+.turn-empty {
+  padding: 16px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: rgba(2, 6, 23, 0.18);
+  color: var(--muted);
+  font-weight: 800;
+}
+
+/* Responsive */
+@media (max-width: 720px) {
+  .turn-card {
+    grid-template-columns: 1fr;
+  }
+  .turn-actions {
+    justify-content: flex-start;
+  }
+}
