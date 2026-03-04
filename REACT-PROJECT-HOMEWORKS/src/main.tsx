@@ -9,11 +9,17 @@ import LinkedMusicPage from './CHALLENGE-03/pages/LinkedMusicPage.tsx'
 import Challenge03App from './CHALLENGE-03/Challenge03App.tsx'
 import StudentApp from './PRACTICA-01/StudentApp.tsx'
 import ProductApp from './PRACTICA-02/ProductApp.tsx'
+import TurnApp from './PRACTICA-03/TurnApp.tsx'
+
 
 import './index.css'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import TurnApp from './PRACTICA-03/TurnApp.tsx'
+import AppHospital from './PARCIAL-01/AppHospital.tsx'
+import PacientesPage from './PARCIAL-01/Pacientes.tsx'
+import DoctoresPage from './PARCIAL-01/Doctores.tsx'
+import ComitePage from './PARCIAL-01/Comite.tsx'
+import HistoryPage from './CHALLENGE-03/pages/HistoryPage.tsx'
 
 
 ReactDOM.createRoot(document.getElementById('root')!)
@@ -28,10 +34,12 @@ ReactDOM.createRoot(document.getElementById('root')!)
         <Arreglos/> 
         <ContactoApp />
         <LinkedMusicPage />
-        <Challenge03App /> 
         <StudentApp />
-        <ProductApp />*/ }
+        <ProductApp />
         <TurnApp />
+        <Challenge03App /> 
+        */}
+        <AppHospital />
     </React.StrictMode> 
 
 )

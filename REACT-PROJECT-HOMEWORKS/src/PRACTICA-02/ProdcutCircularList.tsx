@@ -1,7 +1,6 @@
 import { ProductNode } from "./productNode";
 
 export class ProductCircularList {
-
     head: ProductNode | null
     tail: ProductNode | null
     current: ProductNode | null
