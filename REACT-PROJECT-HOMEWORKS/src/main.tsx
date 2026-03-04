@@ -6,12 +6,13 @@ import Contador from './Contador.tsx'
 import Arreglos from './Arreglos.tsx'
 import ContactoApp from "./CHALLENGE-02/ContactoApp";
 import LinkedMusicPage from './CHALLENGE-03/pages/LinkedMusicPage.tsx'
+import Challenge03App from './CHALLENGE-03/Challenge03App.tsx'
 
 
 import './index.css'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import Challenge03App from './CHALLENGE-03/Challenge03App.tsx'
+import StudentApp from './PRACTICA-01/StudentApp.tsx'
 
 
 ReactDOM.createRoot(document.getElementById('root')!)
@@ -25,8 +26,9 @@ ReactDOM.createRoot(document.getElementById('root')!)
         <Contador suma = {3}/>
         <Arreglos/> 
         <ContactoApp />
-        <LinkedMusicPage />*/ }
-        <Challenge03App />
+        <LinkedMusicPage />
+        <Challenge03App /> */ }
+        <StudentApp />
     </React.StrictMode> 
 
 )
