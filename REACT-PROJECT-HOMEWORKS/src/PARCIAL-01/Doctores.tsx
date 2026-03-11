@@ -1,5 +1,5 @@
 function Doctor(props: any) {
-  const { current, onNext } = props
+  const { current, onNext, onPrev } = props
 
   return (
     <div className="panel">
@@ -12,9 +12,14 @@ function Doctor(props: any) {
           </p>
           <p className="panel-text">Área: {current.area}</p>
 
-          <button className="btn" onClick={onNext}>
-            Siguiente doctor
-          </button>
+          <div className="row">
+            <button className="btn" onClick={onPrev}>
+              Volver
+            </button>
+            <button className="btn" onClick={onNext}>
+              Seguir
+            </button>
+          </div>
         </>
       ) : (
         <p className="panel-text muted">No hay doctores</p>

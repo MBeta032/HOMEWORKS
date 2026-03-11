@@ -131,6 +131,14 @@ export default function AppHospital() {
     doctorList.next()
     setDoctorCurrent(doctorList.current)
   }
+ const prevDoctor = () => {
+  const lista: any = doctorList
+
+  if (lista.previous) lista.previous()
+  else if (lista.prev) lista.prev()
+
+  setDoctorCurrent(doctorList.current)
+}
 
   const nextHistorial = () => {
     historialList.next()
@@ -170,8 +178,7 @@ export default function AppHospital() {
           onDelete={borrarPaciente}
         />
 
-        <Doctor current={doctorCurrent} onNext={nextDoctor} />
-
+        <Doctor current={doctorCurrent} onNext={nextDoctor} onPrev={prevDoctor} />
         <Historial current={historialCurrent} onNext={nextHistorial} onPrev={prevHistorial} />
 
         <Comite current={comiteCurrent} onNext={nextComite} onPrev={prevComite} />
