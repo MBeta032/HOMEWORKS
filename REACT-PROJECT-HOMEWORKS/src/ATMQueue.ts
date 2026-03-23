@@ -20,12 +20,12 @@ export class ATMQueue {
   }
 
   dequeue() {
-    return this.items.length > 0 ? this.items.shift() : null
-  }
+      if (this.isEmpty()) {
+        return null
+      }
 
-  peek() {
-    return this.items.length > 0 ? this.items[0] ?? null : null
-  }
+      return this.items.shift() ?? null
+    }
 
   isEmpty() {
     return this.items.length === 0

@@ -41,9 +41,20 @@ const cargarPersonasMock = () => {
 
 export default function ATMApp() {
   const [personasATM, setPersonasATM] = useState<PersonaATM[]>(cargarPersonasMock())
+  const [ultimaAtendida, setUltimaAtendida] = useState<PersonaATM | null>(null)
 
   const [name, setName] = useState("")
   const [withdrawalAmount, setWithdrawalAmount] = useState("")
+
+  const reconstruirCola = () => {
+    const nuevaCola = new ATMQueue()
+
+    personasATM.forEach((persona) => {
+      nuevaCola.enqueue(persona)
+    })
+
+    return nuevaCola
+  }
 
   const handleAddPersonaATM = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -59,12 +70,7 @@ export default function ATMApp() {
       arrivalDate: crearFechaAleatoria(),
     }
 
-    const nuevaCola = new ATMQueue()
-
-    personasATM.forEach((persona) => {
-      nuevaCola.enqueue(persona)
-    })
-
+    const nuevaCola = reconstruirCola()
     nuevaCola.enqueue(nuevaPersona)
 
     setPersonasATM(nuevaCola.print())
@@ -73,19 +79,35 @@ export default function ATMApp() {
     setWithdrawalAmount("")
   }
 
+  const handleRemovePersonaATM = () => {
+    if (personasATM.length === 0) {
+      return
+    }
+
+    const nuevaCola = reconstruirCola()
+    const personaAtendida = nuevaCola.dequeue()
+
+    setUltimaAtendida(personaAtendida)
+    setPersonasATM(nuevaCola.print())
+  }
+
   return (
     <div>
-      <h1>Challenge 05 - Queue de Personas ATM</h1>
+      <h1>Challenge 05 - Cola de Personas en Cajero</h1>
 
       <p>Total de personas en cola: {personasATM.length}</p>
       <p>
         Primera persona en la cola:{" "}
         {personasATM.length > 0 ? personasATM[0].name : "Ninguna"}
       </p>
+      <p>
+        Última persona atendida:{" "}
+        {ultimaAtendida ? ultimaAtendida.name : "Ninguna"}
+      </p>
 
       <form onSubmit={handleAddPersonaATM}>
         <div>
-          <label>Name</label>
+          <label>Nombre</label>
           <input
             value={name}
             onChange={(e) => setName(e.target.value)}
@@ -94,7 +116,7 @@ export default function ATMApp() {
         </div>
 
         <div>
-          <label>Withdrawal Amount</label>
+          <label>Monto a retirar</label>
           <input
             type="number"
             value={withdrawalAmount}
@@ -103,22 +125,26 @@ export default function ATMApp() {
           />
         </div>
 
-        <button type="submit">Agregar Persona ATM</button>
+        <button type="submit">Agregar Persona</button>
       </form>
+
+      <button onClick={handleRemovePersonaATM} disabled={personasATM.length === 0}>
+        Atender Persona
+      </button>
 
       <hr />
 
-      <h2>Cola de personas por arrival date</h2>
+      <h2>Cola de personas por fecha de llegada</h2>
 
       {personasATM.map((persona) => (
         <div key={persona.id}>
-          <p><strong>Name:</strong> {persona.name}</p>
+          <p><strong>Nombre:</strong> {persona.name}</p>
           <p>
-            <strong>Withdrawal Amount:</strong> $
+            <strong>Monto a retirar:</strong> $
             {persona.withdrawalAmount.toLocaleString("es-CO")}
           </p>
           <p>
-            <strong>Arrival Date:</strong>{" "}
+            <strong>Fecha de llegada:</strong>{" "}
             {new Date(persona.arrivalDate).toLocaleString("es-CO")}
           </p>
           <hr />
