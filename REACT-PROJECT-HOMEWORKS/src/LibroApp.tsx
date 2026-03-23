@@ -37,11 +37,25 @@ const cargarLibrosMock = () => {
 
 export default function LibroApp() {
   const [libros, setLibros] = useState<Libro[]>(cargarLibrosMock())
+  const [ultimoRemovido, setUltimoRemovido] = useState<Libro | null>(null)
 
   const [name, setName] = useState("")
   const [isbn, setIsbn] = useState("")
   const [author, setAuthor] = useState("")
   const [editorial, setEditorial] = useState("")
+
+  const reconstruirPila = () => {
+    const nuevaPila = new BookStack()
+
+    libros
+      .slice()
+      .reverse()
+      .forEach((libro) => {
+        nuevaPila.push(libro)
+      })
+
+    return nuevaPila
+  }
 
   const handleAddLibro = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -63,14 +77,7 @@ export default function LibroApp() {
       editorial: editorial,
     }
 
-    const nuevaPila = new BookStack()
-    libros
-      .slice()
-      .reverse()
-      .forEach((libro) => {
-        nuevaPila.push(libro)
-      })
-
+    const nuevaPila = reconstruirPila()
     nuevaPila.push(nuevoLibro)
 
     setLibros(nuevaPila.print())
@@ -81,6 +88,18 @@ export default function LibroApp() {
     setEditorial("")
   }
 
+  const handleRemoveLibro = () => {
+    if (libros.length === 0) {
+      return
+    }
+
+    const nuevaPila = reconstruirPila()
+    const libroRemovido = nuevaPila.pop()
+
+    setUltimoRemovido(libroRemovido)
+    setLibros(nuevaPila.print())
+  }
+
   return (
     <div>
       <h1>Challenge 04 - Stack de Libros</h1>
@@ -88,6 +107,9 @@ export default function LibroApp() {
       <p>Total de libros: {libros.length}</p>
       <p>
         Libro arriba de la pila: {libros.length > 0 ? libros[0].name : "Ninguno"}
+      </p>
+      <p>
+        Último libro removido: {ultimoRemovido ? ultimoRemovido.name : "Ninguno"}
       </p>
 
       <form onSubmit={handleAddLibro}>
@@ -129,6 +151,10 @@ export default function LibroApp() {
 
         <button type="submit">Agregar Libro</button>
       </form>
+
+      <button onClick={handleRemoveLibro} disabled={libros.length === 0}>
+        Quitar Libro de la Pila
+      </button>
 
       <hr />
 

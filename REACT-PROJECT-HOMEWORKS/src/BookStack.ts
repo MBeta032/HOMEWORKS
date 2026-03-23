@@ -21,7 +21,11 @@ export class BookStack {
   }
 
   pop() {
-    return this.items.length > 0 ? this.items.pop() : null
+    if (this.isEmpty()) {
+      return null
+    }
+
+    return this.items.pop() ?? null
   }
 
   peek() {
