@@ -1,64 +1,45 @@
 import { useState } from "react"
-import { BookStack, type Libro } from "./BookStack"
+import { Stack } from "./algorithms/stack"
+import BookForm from "./components/BookForm"
+import LibraryList from "./components/LibraryList"
+import Button from "./components/Button"
+import { booksMockData } from "./data/books.mock"
+import type { Libro } from "./interfaces/book.interface"
 
-const cargarLibrosMock = () => {
-  const stack = new BookStack()
+const loadMockBooks = () => {
+  const stack = new Stack()
 
-  const librosMock: Libro[] = [
-    {
-      id: 1,
-      name: "Clean Code",
-      isbn: "9780132350884",
-      author: "Robert C. Martin",
-      editorial: "Prentice Hall",
-    },
-    {
-      id: 2,
-      name: "The Pragmatic Programmer",
-      isbn: "9780201616224",
-      author: "Andrew Hunt",
-      editorial: "Addison-Wesley",
-    },
-    {
-      id: 3,
-      name: "Eloquent JavaScript",
-      isbn: "9781593279509",
-      author: "Marijn Haverbeke",
-      editorial: "No Starch Press",
-    },
-  ]
-
-  librosMock.forEach((libro) => {
-    stack.push(libro)
+  booksMockData.forEach((book) => {
+    stack.push(book)
   })
 
   return stack.print()
 }
 
 export default function LibroApp() {
-  const [libros, setLibros] = useState<Libro[]>(cargarLibrosMock())
-  const [ultimoRemovido, setUltimoRemovido] = useState<Libro | null>(null)
+  const [books, setBooks] = useState<Libro[]>(loadMockBooks())
+  const [lastRemoved, setLastRemoved] = useState<Libro | null>(null)
 
   const [name, setName] = useState("")
   const [isbn, setIsbn] = useState("")
   const [author, setAuthor] = useState("")
   const [editorial, setEditorial] = useState("")
 
-  const reconstruirPila = () => {
-    const nuevaPila = new BookStack()
+  const rebuildStack = () => {
+    const stack = new Stack()
 
-    libros
+    books
       .slice()
       .reverse()
-      .forEach((libro) => {
-        nuevaPila.push(libro)
+      .forEach((book) => {
+        stack.push(book)
       })
 
-    return nuevaPila
+    return stack
   }
 
-  const handleAddLibro = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+  const handleAddBook = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
 
     if (
       name.trim() === "" ||
@@ -69,106 +50,70 @@ export default function LibroApp() {
       return
     }
 
-    const nuevoLibro: Libro = {
+    const newBook: Libro = {
       id: Date.now(),
-      name: name,
-      isbn: isbn,
-      author: author,
-      editorial: editorial,
+      name: name.trim(),
+      isbn: isbn.trim(),
+      author: author.trim(),
+      editorial: editorial.trim(),
     }
 
-    const nuevaPila = reconstruirPila()
-    nuevaPila.push(nuevoLibro)
+    const stack = rebuildStack()
+    stack.push(newBook)
 
-    setLibros(nuevaPila.print())
-
+    setBooks(stack.print())
     setName("")
     setIsbn("")
     setAuthor("")
     setEditorial("")
   }
 
-  const handleRemoveLibro = () => {
-    if (libros.length === 0) {
+  const handleRemoveBook = () => {
+    if (books.length === 0) {
       return
     }
 
-    const nuevaPila = reconstruirPila()
-    const libroRemovido = nuevaPila.pop()
+    const stack = rebuildStack()
+    const removedBook = stack.pop()
 
-    setUltimoRemovido(libroRemovido)
-    setLibros(nuevaPila.print())
+    setLastRemoved(removedBook)
+    setBooks(stack.print())
   }
 
   return (
-    <div>
-      <h1>Challenge 04 - Stack de Libros</h1>
+    <main className="page">
+      <section className="library-container">
+        <h1>Stack de libros</h1>
 
-      <p>Total de libros: {libros.length}</p>
-      <p>
-        Libro arriba de la pila: {libros.length > 0 ? libros[0].name : "Ninguno"}
-      </p>
-      <p>
-        Último libro removido: {ultimoRemovido ? ultimoRemovido.name : "Ninguno"}
-      </p>
+        <div className="library-info">
+          <p>Total de libros: {books.length}</p>
+          <p>Libro arriba de la pila: {books.length > 0 ? books[0].name : "Ninguno"}</p>
+          <p>Último libro removido: {lastRemoved ? lastRemoved.name : "Ninguno"}</p>
+        </div>
 
-      <form onSubmit={handleAddLibro}>
-        <div>
-          <label>Name</label>
-          <input
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Nombre del libro"
+        <BookForm
+          name={name}
+          isbn={isbn}
+          author={author}
+          editorial={editorial}
+          onChangeName={setName}
+          onChangeIsbn={setIsbn}
+          onChangeAuthor={setAuthor}
+          onChangeEditorial={setEditorial}
+          onSubmit={handleAddBook}
+        />
+
+        <div className="actions">
+          <Button
+            text="Quitar libro de la pila"
+            onClick={handleRemoveBook}
+            disabled={books.length === 0}
           />
         </div>
 
-        <div>
-          <label>ISBN</label>
-          <input
-            value={isbn}
-            onChange={(e) => setIsbn(e.target.value)}
-            placeholder="ISBN"
-          />
-        </div>
-
-        <div>
-          <label>Author</label>
-          <input
-            value={author}
-            onChange={(e) => setAuthor(e.target.value)}
-            placeholder="Autor"
-          />
-        </div>
-
-        <div>
-          <label>Editorial</label>
-          <input
-            value={editorial}
-            onChange={(e) => setEditorial(e.target.value)}
-            placeholder="Editorial"
-          />
-        </div>
-
-        <button type="submit">Agregar Libro</button>
-      </form>
-
-      <button onClick={handleRemoveLibro} disabled={libros.length === 0}>
-        Quitar Libro de la Pila
-      </button>
-
-      <hr />
-
-      <h2>Pila de libros</h2>
-
-      {libros.map((libro) => (
-        <div key={libro.id}>
-          <p><strong>Name:</strong> {libro.name}</p>
-          <p><strong>ISBN:</strong> {libro.isbn}</p>
-          <p><strong>Author:</strong> {libro.author}</p>
-          <p><strong>Editorial:</strong> {libro.editorial}</p>
-          <hr />
-        </div>
-      ))}
-    </div>
+        <h2>Pila de libros</h2>
+        <LibraryList books={books} />
+      </section>
+    </main>
   )
 }
