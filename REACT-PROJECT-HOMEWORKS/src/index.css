@@ -15,10 +15,13 @@ body {
   padding: 30px 20px;
 }
 
-#root > div {
+.page {
+  width: 100%;
+}
+
+.atm-container {
   background: white;
   padding: 24px;
-  margin-bottom: 30px;
   border-radius: 14px;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
 }
@@ -42,12 +45,12 @@ p {
   line-height: 1.5;
 }
 
-form {
+.atm-form {
   margin-top: 20px;
   margin-bottom: 20px;
 }
 
-form > div {
+.atm-form > div {
   margin-bottom: 14px;
 }
 
@@ -87,10 +90,25 @@ button:hover {
   background: #1d4ed8;
 }
 
-hr {
-  border: none;
-  border-top: 1px solid #e5e7eb;
-  margin: 20px 0;
+button:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+}
+
+.actions {
+  margin-bottom: 20px;
+}
+
+.atm-list {
+  display: grid;
+  gap: 14px;
+}
+
+.atm-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 14px;
+  background: #f8fafc;
 }
 
 strong {

@@ -1,155 +1,108 @@
 import { useState } from "react"
-import { ATMQueue, type PersonaATM } from "./ATMQueue"
+import { Queue } from "./algorithms/Queue.class"
+import ATMForm from "./components/ATMForm"
+import ATMList from "./components/ATMList"
+import Button from "./components/Button"
+import { ATMdata, createRandomArrivalDate } from "./data/ATMdata"
+import type { IATMRecord } from "./interfaces/IATM.interface"
 
-const crearFechaAleatoria = () => {
-  const fecha = new Date()
-  const minutosAleatorios = Math.floor(Math.random() * 10080)
-  fecha.setMinutes(fecha.getMinutes() - minutosAleatorios)
-  return fecha.getTime()
-}
+const loadInitialPeople = () => {
+  const queue = new Queue()
 
-const cargarPersonasMock = () => {
-  const queue = new ATMQueue()
-
-  const personasMock: PersonaATM[] = [
-    {
-      id: 1,
-      name: "Laura",
-      withdrawalAmount: 200000,
-      arrivalDate: crearFechaAleatoria(),
-    },
-    {
-      id: 2,
-      name: "Carlos",
-      withdrawalAmount: 50000,
-      arrivalDate: crearFechaAleatoria(),
-    },
-    {
-      id: 3,
-      name: "Andres",
-      withdrawalAmount: 120000,
-      arrivalDate: crearFechaAleatoria(),
-    },
-  ]
-
-  personasMock.forEach((persona) => {
-    queue.enqueue(persona)
+  ATMdata.forEach((person) => {
+    queue.enqueue(person)
   })
 
   return queue.print()
 }
 
-export default function ATMApp() {
-  const [personasATM, setPersonasATM] = useState<PersonaATM[]>(cargarPersonasMock())
-  const [ultimaAtendida, setUltimaAtendida] = useState<PersonaATM | null>(null)
+export default function ATM() {
+  const [people, setPeople] = useState<IATMRecord[]>(loadInitialPeople())
+  const [lastAttended, setLastAttended] = useState<IATMRecord | null>(null)
 
   const [name, setName] = useState("")
   const [withdrawalAmount, setWithdrawalAmount] = useState("")
 
-  const reconstruirCola = () => {
-    const nuevaCola = new ATMQueue()
+  const rebuildQueue = () => {
+    const queue = new Queue()
 
-    personasATM.forEach((persona) => {
-      nuevaCola.enqueue(persona)
+    people.forEach((person) => {
+      queue.enqueue(person)
     })
 
-    return nuevaCola
+    return queue
   }
 
-  const handleAddPersonaATM = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+  const handleAddPerson = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
 
     if (name.trim() === "" || withdrawalAmount.trim() === "") {
       return
     }
 
-    const nuevaPersona: PersonaATM = {
+    const newPerson: IATMRecord = {
       id: Date.now(),
-      name: name,
+      name: name.trim(),
       withdrawalAmount: Number(withdrawalAmount),
-      arrivalDate: crearFechaAleatoria(),
+      arrivalDate: createRandomArrivalDate(),
     }
 
-    const nuevaCola = reconstruirCola()
-    nuevaCola.enqueue(nuevaPersona)
+    const queue = rebuildQueue()
+    queue.enqueue(newPerson)
 
-    setPersonasATM(nuevaCola.print())
-
+    setPeople(queue.print())
     setName("")
     setWithdrawalAmount("")
   }
 
-  const handleRemovePersonaATM = () => {
-    if (personasATM.length === 0) {
+  const handleAttendPerson = () => {
+    if (people.length === 0) {
       return
     }
 
-    const nuevaCola = reconstruirCola()
-    const personaAtendida = nuevaCola.dequeue()
+    const queue = rebuildQueue()
+    const attendedPerson = queue.dequeue()
 
-    setUltimaAtendida(personaAtendida)
-    setPersonasATM(nuevaCola.print())
+    setLastAttended(attendedPerson)
+    setPeople(queue.print())
   }
 
   return (
-    <div>
-      <h1>Challenge 05 - Cola de Personas en Cajero</h1>
+    <main className="page">
+      <section className="atm-container">
+        <h1>Challenge 08 - Cola de personas en cajero</h1>
 
-      <p>Total de personas en cola: {personasATM.length}</p>
-      <p>
-        Primera persona en la cola:{" "}
-        {personasATM.length > 0 ? personasATM[0].name : "Ninguna"}
-      </p>
-      <p>
-        Última persona atendida:{" "}
-        {ultimaAtendida ? ultimaAtendida.name : "Ninguna"}
-      </p>
+        <div className="atm-info">
+          <p>Total de personas en cola: {people.length}</p>
+          <p>
+            Primera persona en la cola:{" "}
+            {people.length > 0 ? people[0].name : "Ninguna"}
+          </p>
+          <p>
+            Última persona atendida:{" "}
+            {lastAttended ? lastAttended.name : "Ninguna"}
+          </p>
+        </div>
 
-      <form onSubmit={handleAddPersonaATM}>
-        <div>
-          <label>Nombre</label>
-          <input
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Nombre"
+        <ATMForm
+          name={name}
+          withdrawalAmount={withdrawalAmount}
+          onChangeName={setName}
+          onChangeWithdrawalAmount={setWithdrawalAmount}
+          onSubmit={handleAddPerson}
+        />
+
+        <div className="actions">
+          <Button
+            text="Atender persona"
+            onClick={handleAttendPerson}
+            disabled={people.length === 0}
           />
         </div>
 
-        <div>
-          <label>Monto a retirar</label>
-          <input
-            type="number"
-            value={withdrawalAmount}
-            onChange={(e) => setWithdrawalAmount(e.target.value)}
-            placeholder="Monto a retirar"
-          />
-        </div>
-
-        <button type="submit">Agregar Persona</button>
-      </form>
-
-      <button onClick={handleRemovePersonaATM} disabled={personasATM.length === 0}>
-        Atender Persona
-      </button>
-
-      <hr />
-
-      <h2>Cola de personas por fecha de llegada</h2>
-
-      {personasATM.map((persona) => (
-        <div key={persona.id}>
-          <p><strong>Nombre:</strong> {persona.name}</p>
-          <p>
-            <strong>Monto a retirar:</strong> $
-            {persona.withdrawalAmount.toLocaleString("es-CO")}
-          </p>
-          <p>
-            <strong>Fecha de llegada:</strong>{" "}
-            {new Date(persona.arrivalDate).toLocaleString("es-CO")}
-          </p>
-          <hr />
-        </div>
-      ))}
-    </div>
+        <h2>Cola de personas por fecha de llegada</h2>
+        <ATMList people={people} />
+      </section>
+    </main>
   )
 }
