@@ -1,16 +1,17 @@
 import { useNavigate } from "react-router-dom"
-import { useAuth } from "../../hooks/useAuth"
+import { signOut } from "firebase/auth"
+import { auth } from "../../firebase"
 
 export default function Header() {
-  const { user, logout } = useAuth()
   const navigate = useNavigate()
+  const user = auth.currentUser
 
   const goToHome = () => {
     navigate("/home")
   }
 
-  const handleLogout = () => {
-    logout()
+  const handleLogout = async () => {
+    await signOut(auth)
     navigate("/login")
   }
 
@@ -23,7 +24,7 @@ export default function Header() {
       </div>
 
       <div className="app-header-actions">
-        <button onClick={goToHome}>Volver al inicio</button>
+        <button onClick={goToHome}>Volver al Home</button>
         <button onClick={handleLogout}>Logout</button>
       </div>
     </header>

@@ -1,39 +1,41 @@
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "../hooks/useAuth";
+import { useNavigate } from "react-router-dom"
+import { signOut } from "firebase/auth"
+import { auth } from "../firebase"
 
 export default function Home() {
-    const { user, logout } = useAuth()
-    const navigate = useNavigate()
+  const navigate = useNavigate()
 
-    const goToATM = () => {
-        navigate("/atm")
-    }
+  const user = auth.currentUser
 
-    const goToLibrary = () => {
-        navigate("/library")
-    }
+  const goToATM = () => {
+    navigate("/atm")
+  }
 
-    const handleLogout = () => {
-        logout()
-        navigate("/login")
-    }
+  const goToLibrary = () => {
+    navigate("/library")
+  }
 
-    return(
-        <main className="page">
-            <section className="home-container">
-                <h1>Home</h1>
+  const handleLogout = async () => {
+    await signOut(auth)
+    navigate("/login")
+  }
 
-                <p>Bienvenido al sistema</p>
-                <p>
-                Usuario actual: <strong>{user?.email}</strong>
-                </p>
+  return (
+    <main className="page">
+      <section className="home-container">
+        <h1>Home</h1>
 
-                <div className="home-actions">
-                <button onClick={goToATM}>Ir a ATM</button>
-                <button onClick={goToLibrary}>Ir a Library</button>
-                <button onClick={handleLogout}>Logout</button>
-                </div>
-            </section>
-        </main>
-    )
+        <p>Bienvenido al sistema</p>
+        <p>
+          Usuario actual: <strong>{user?.email}</strong>
+        </p>
+
+        <div className="home-actions">
+          <button onClick={goToATM}>Ir a ATM</button>
+          <button onClick={goToLibrary}>Ir a Library</button>
+          <button onClick={handleLogout}>Logout</button>
+        </div>
+      </section>
+    </main>
+  )
 }

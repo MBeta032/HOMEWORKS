@@ -1,32 +1,32 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { signInWithEmailAndPassword } from "firebase/auth"
+import { createUserWithEmailAndPassword } from "firebase/auth"
 import { auth } from "../firebase"
 
-export default function Login() {
+export default function Register() {
   const navigate = useNavigate()
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
 
-  const handleLogin = async () => {
+  const handleRegister = async () => {
     try {
       setError("")
 
-      await signInWithEmailAndPassword(auth, email, password)
+      await createUserWithEmailAndPassword(auth, email, password)
 
       navigate("/home")
     } catch (error) {
       console.error(error)
-      setError("Correo o contraseña incorrectos")
+      setError("No se pudo crear la cuenta")
     }
   }
 
   return (
     <main className="page">
       <section className="login-container">
-        <h1>Demo Login Page</h1>
+        <h1>Register</h1>
 
         <div className="login-form">
           <div>
@@ -51,12 +51,12 @@ export default function Login() {
             />
           </div>
 
-          <button type="button" onClick={handleLogin}>
-            Login
+          <button type="button" onClick={handleRegister}>
+            Crear cuenta
           </button>
 
-          <button type="button" onClick={() => navigate("/register")}>
-            Ir a Register
+          <button type="button" onClick={() => navigate("/login")}>
+            Volver al Login
           </button>
         </div>
 
