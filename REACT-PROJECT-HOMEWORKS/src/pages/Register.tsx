@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { createUserWithEmailAndPassword } from "firebase/auth"
-import { auth } from "../firebase"
+import { auth } from "../Firebase/config"
 
 export default function Register() {
   const navigate = useNavigate()
@@ -10,7 +10,9 @@ export default function Register() {
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
 
-  const handleRegister = async () => {
+  const handleRegister = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+
     try {
       setError("")
 
@@ -26,39 +28,37 @@ export default function Register() {
   return (
     <main className="page">
       <section className="login-container">
-        <h1>Register</h1>
+        <h1>Registro</h1>
 
-        <div className="login-form">
+        <form className="login-form" onSubmit={handleRegister}>
           <div>
-            <label htmlFor="email">Email</label>
+            <label htmlFor="email">Correo</label>
             <input
               id="email"
               type="email"
               value={email}
               onChange={(event) => setEmail(event.target.value)}
-              placeholder="Email"
+              placeholder="Ingresa tu correo"
             />
           </div>
 
           <div>
-            <label htmlFor="password">Password</label>
+            <label htmlFor="password">Contraseña</label>
             <input
               id="password"
               type="password"
               value={password}
               onChange={(event) => setPassword(event.target.value)}
-              placeholder="Password"
+              placeholder="Crea una contraseña"
             />
           </div>
 
-          <button type="button" onClick={handleRegister}>
-            Crear cuenta
-          </button>
+          <button type="submit">Crear cuenta</button>
 
           <button type="button" onClick={() => navigate("/login")}>
-            Volver al Login
+            Volver al login
           </button>
-        </div>
+        </form>
 
         {error && <p className="error-text">{error}</p>}
       </section>

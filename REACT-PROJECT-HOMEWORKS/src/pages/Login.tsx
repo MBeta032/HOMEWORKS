@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { signInWithEmailAndPassword } from "firebase/auth"
-import { auth } from "../firebase"
+import { auth } from "../Firebase/config"
 
 export default function Login() {
   const navigate = useNavigate()
@@ -10,7 +10,9 @@ export default function Login() {
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
 
-  const handleLogin = async () => {
+  const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+
     try {
       setError("")
 
@@ -26,39 +28,37 @@ export default function Login() {
   return (
     <main className="page">
       <section className="login-container">
-        <h1>Demo Login Page</h1>
+        <h1>Login</h1>
 
-        <div className="login-form">
+        <form className="login-form" onSubmit={handleLogin}>
           <div>
-            <label htmlFor="email">Email</label>
+            <label htmlFor="email">Correo</label>
             <input
               id="email"
               type="email"
               value={email}
               onChange={(event) => setEmail(event.target.value)}
-              placeholder="Email"
+              placeholder="Ingresa tu correo"
             />
           </div>
 
           <div>
-            <label htmlFor="password">Password</label>
+            <label htmlFor="password">Contraseña</label>
             <input
               id="password"
               type="password"
               value={password}
               onChange={(event) => setPassword(event.target.value)}
-              placeholder="Password"
+              placeholder="Ingresa tu contraseña"
             />
           </div>
 
-          <button type="button" onClick={handleLogin}>
-            Login
-          </button>
+          <button type="submit">Iniciar sesión</button>
 
           <button type="button" onClick={() => navigate("/register")}>
-            Ir a Register
+            Ir a registro
           </button>
-        </div>
+        </form>
 
         {error && <p className="error-text">{error}</p>}
       </section>
