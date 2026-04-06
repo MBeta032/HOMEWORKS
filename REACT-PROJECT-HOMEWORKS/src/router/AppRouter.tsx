@@ -1,18 +1,18 @@
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom"
-import PrivateRoute from "./PrivateRoute"
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 import Login from "../pages/Login"
 import Register from "../pages/Register"
 import Home from "../pages/Home"
 import Tasks from "../pages/Tasks"
 import ATM from "../pages/ATM"
 import Library from "../pages/Library"
+import PrivateRoute from "./PrivateRoute"
+import { TaskProvider } from "../context/TaskContext"
 
-export default function AppRouter() {
+function AppRouter() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Navigate to="/login" replace />} />
-
+        <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
@@ -29,7 +29,9 @@ export default function AppRouter() {
           path="/tasks"
           element={
             <PrivateRoute>
-              <Tasks />
+              <TaskProvider>
+                <Tasks />
+              </TaskProvider>
             </PrivateRoute>
           }
         />
@@ -51,9 +53,9 @@ export default function AppRouter() {
             </PrivateRoute>
           }
         />
-
-        <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
     </BrowserRouter>
   )
 }
+
+export default AppRouter

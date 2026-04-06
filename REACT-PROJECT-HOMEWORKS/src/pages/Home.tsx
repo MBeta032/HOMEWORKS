@@ -1,11 +1,11 @@
 import { useNavigate } from "react-router-dom"
 import { signOut } from "firebase/auth"
 import { auth } from "../Firebase/config"
+import { useAuth } from "../hooks/useAuth"
 
 export default function Home() {
   const navigate = useNavigate()
-
-  const user = auth.currentUser
+  const { user } = useAuth()
 
   const handleLogout = async () => {
     await signOut(auth)

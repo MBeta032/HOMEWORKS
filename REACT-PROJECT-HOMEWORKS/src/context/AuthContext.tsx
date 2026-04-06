@@ -1,34 +1,44 @@
-import { createContext, useState, type ReactNode } from "react"
-import type { AuthContextType, AuthUser } from "../interfaces/auth.interface"
+import { createContext, useContext, useEffect, useState, type ReactNode } from "react"
+import { onAuthStateChanged, type User } from "firebase/auth"
+import { auth } from "../Firebase/config"
 
-const VALID_EMAIL = "user@mail.com"
-const VALID_PASSWORD = "123"
+interface AuthContextType {
+  user: User | null
+  loading: boolean
+}
 
-export const AuthContext = createContext<AuthContextType | null>(null)
+const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 interface AuthProviderProps {
   children: ReactNode
 }
 
 export function AuthProvider({ children }: AuthProviderProps) {
-  const [user, setUser] = useState<AuthUser | null>(null)
+  const [user, setUser] = useState<User | null>(null)
+  const [loading, setLoading] = useState(true)
 
-  const login = (email: string, password: string) => {
-    if (email === VALID_EMAIL && password === VALID_PASSWORD) {
-      setUser({ email })
-      return true
-    }
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser)
+      setLoading(false)
+    })
 
-    return false
-  }
-
-  const logout = () => {
-    setUser(null)
-  }
+    return () => unsubscribe()
+  }, [])
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, loading }}>
       {children}
     </AuthContext.Provider>
   )
+}
+
+export function useAuthContext() {
+  const context = useContext(AuthContext)
+
+  if (!context) {
+    throw new Error("useAuthContext debe usarse dentro de AuthProvider")
+  }
+
+  return context
 }

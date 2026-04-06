@@ -10,8 +10,8 @@ const firebaseConfig = {
   storageBucket: "challenge-07-ad5d6.firebasestorage.app",
   messagingSenderId: "212997303660",
   appId: "1:212997303660:web:b0ffbdef22a89f04cdd749",
-  measurementId: "G-QJLCR2R1V8",
-}
+  measurementId: "G-QJLCR2R1V8"
+};
 
 const app = initializeApp(firebaseConfig)
 const auth = getAuth(app)
