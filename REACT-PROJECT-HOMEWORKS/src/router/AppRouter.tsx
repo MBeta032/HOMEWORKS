@@ -2,11 +2,9 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 import Login from "../pages/Login"
 import Register from "../pages/Register"
 import Home from "../pages/Home"
-import Tasks from "../pages/Tasks"
-import ATM from "../pages/ATM"
-import Library from "../pages/Library"
 import PrivateRoute from "./PrivateRoute"
-import { TaskProvider } from "../context/TaskContext"
+import BinaryTree from "../pages/BinaryTree"
+
 
 function AppRouter() {
   return (
@@ -24,32 +22,11 @@ function AppRouter() {
             </PrivateRoute>
           }
         />
-
         <Route
-          path="/tasks"
+          path="/binary-tree"
           element={
             <PrivateRoute>
-              <TaskProvider>
-                <Tasks />
-              </TaskProvider>
-            </PrivateRoute>
-          }
-        />
-
-        <Route
-          path="/atm"
-          element={
-            <PrivateRoute>
-              <ATM />
-            </PrivateRoute>
-          }
-        />
-
-        <Route
-          path="/library"
-          element={
-            <PrivateRoute>
-              <Library />
+              <BinaryTree />
             </PrivateRoute>
           }
         />

@@ -1,35 +1,28 @@
 import { useNavigate } from "react-router-dom"
-import { signOut } from "firebase/auth"
-import { auth } from "../Firebase/config"
 import { useAuth } from "../hooks/useAuth"
 
-export default function Home() {
+const Home = () => {
   const navigate = useNavigate()
   const { user } = useAuth()
-
-  const handleLogout = async () => {
-    await signOut(auth)
-    navigate("/login")
-  }
 
   return (
     <main className="page">
       <section className="home-container">
-        <h1>Home</h1>
+        <h1>Bienvenido al dashboard</h1>
 
-        <p>Bienvenido al sistema</p>
-
+        <p>Has iniciado sesión correctamente. Aqui podras encontrar el acceso a Trees</p>
         <p>
-          Usuario actual: <strong>{user?.email}</strong>
+          Usuario actual: <strong>{user?.email ?? "Sin usuario"}</strong>
         </p>
 
         <div className="home-actions">
-          <button onClick={() => navigate("/tasks")}>Ir a Tasks</button>
-          <button onClick={() => navigate("/atm")}>Ir a ATM</button>
-          <button onClick={() => navigate("/library")}>Ir a Library</button>
-          <button onClick={handleLogout}>Logout</button>
+          <button onClick={() => navigate("/binary-tree")}>
+            Ir a Binary Tree
+          </button>
         </div>
       </section>
     </main>
   )
 }
+
+export default Home
