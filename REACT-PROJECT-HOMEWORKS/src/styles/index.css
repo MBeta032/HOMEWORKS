@@ -8,7 +8,7 @@ body,
   margin: 0;
   min-height: 100%;
   font-family: Arial, Helvetica, sans-serif;
-  background: #f4f7fb;
+  background: #eef2f7;
   color: #1f2937;
 }
 
@@ -36,10 +36,9 @@ button {
 
 .auth-card,
 .home-card,
-.content-card,
-.result-card {
+.content-card {
   background: #ffffff;
-  border-radius: 18px;
+  border-radius: 20px;
   padding: 24px;
   box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
 }
@@ -66,6 +65,7 @@ button {
   border: 1px solid #d8dee9;
   border-radius: 12px;
   outline: none;
+  background: #fff;
 }
 
 .auth-input:focus {
@@ -82,6 +82,7 @@ button {
   align-items: center;
   justify-content: center;
   transition: 0.2s ease;
+  font-weight: 600;
 }
 
 .primary-button:disabled,
@@ -186,11 +187,12 @@ button {
 }
 
 .sidebar {
-  background: #0f172a;
+  background: linear-gradient(180deg, #071533 0%, #09142b 100%);
   color: white;
-  border-radius: 18px;
+  border-radius: 20px;
   padding: 18px;
   min-height: 520px;
+  box-shadow: 0 18px 32px rgba(7, 21, 51, 0.18);
 }
 
 .sidebar-root-link {
@@ -224,7 +226,7 @@ button {
 }
 
 .sidebar-link.active {
-  background: #2563eb;
+  background: #2f67e8;
   color: white;
 }
 
@@ -247,23 +249,187 @@ button {
   flex-wrap: wrap;
 }
 
-.results-grid {
+.toolbar-clean {
+  background: transparent;
+  padding: 0;
+}
+
+.page-title {
+  margin: 0 0 8px;
+  font-size: 2.2rem;
+  color: #14213d;
+}
+
+.page-subtitle {
+  margin: 0;
+  max-width: 760px;
+  color: #52607a;
+  line-height: 1.6;
+}
+
+.content-view {
   display: grid;
+  gap: 22px;
+}
+
+.content-hero {
+  background: linear-gradient(135deg, #ffffff 0%, #f8fbff 100%);
+  border-radius: 22px;
+  padding: 28px;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+  display: grid;
+  grid-template-columns: 1.8fr 0.9fr;
+  gap: 20px;
+  align-items: start;
+  border: 1px solid #e7edf6;
+}
+
+.content-hero-copy h2 {
+  margin: 0 0 12px;
+  font-size: 2rem;
+  color: #132238;
+}
+
+.content-intro {
+  margin: 0 0 14px;
+  color: #39485f;
+  line-height: 1.7;
+  font-size: 1.02rem;
+}
+
+.content-hero-text {
+  margin: 0;
+  color: #5a6780;
+  line-height: 1.7;
+}
+
+.content-route-box {
+  background: #0f172a;
+  color: white;
+  border-radius: 18px;
+  padding: 18px;
+  display: grid;
+  gap: 8px;
+}
+
+.content-route-box span {
+  font-size: 0.85rem;
+  color: #93c5fd;
+}
+
+.content-route-box strong {
+  font-size: 1rem;
+  line-height: 1.5;
+  word-break: break-word;
+}
+
+.content-route-box small {
+  color: #cbd5e1;
+}
+
+.content-info-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 16px;
 }
 
-.result-card pre {
-  white-space: pre-wrap;
-  margin: 0;
-  font-family: Consolas, monospace;
-  font-size: 14px;
+.info-card {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 20px;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.07);
+  border: 1px solid #e7edf6;
 }
 
-.content-card h2,
-.result-card h3,
-.home-card h1,
-.auth-card h1 {
+.info-card-title {
+  margin: 0 0 10px;
+  color: #607089;
+  font-size: 0.95rem;
+}
+
+.info-card h3 {
+  margin: 0 0 8px;
+  font-size: 1.8rem;
+  color: #12233d;
+}
+
+.info-card span {
+  color: #5f6d84;
+  line-height: 1.5;
+  font-size: 0.95rem;
+}
+
+.content-sections-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.section-card {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 22px;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.07);
+  border: 1px solid #e7edf6;
+}
+
+.section-card h3 {
   margin-top: 0;
+  margin-bottom: 12px;
+  color: #132238;
+}
+
+.section-card p {
+  margin: 0;
+  color: #52607a;
+  line-height: 1.7;
+}
+
+.callout-box {
+  background: linear-gradient(135deg, #132238 0%, #1f3a63 100%);
+  color: white;
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.14);
+}
+
+.callout-box h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: #ffffff;
+}
+
+.callout-box p {
+  margin: 0;
+  line-height: 1.7;
+  color: #dbe6f6;
+}
+
+.theme-dashboard .content-hero {
+  border-top: 5px solid #2563eb;
+}
+
+.theme-products .content-hero {
+  border-top: 5px solid #7c3aed;
+}
+
+.theme-users .content-hero {
+  border-top: 5px solid #0f766e;
+}
+
+.theme-reports .content-hero {
+  border-top: 5px solid #ea580c;
+}
+
+@media (max-width: 1100px) {
+  .content-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .content-info-grid,
+  .content-sections-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 900px) {
@@ -273,5 +439,9 @@ button {
 
   .sidebar {
     min-height: auto;
+  }
+
+  .page-title {
+    font-size: 1.8rem;
   }
 }
