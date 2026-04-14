@@ -1,1 +1,0 @@
-export const defaultNumbers: number[] = [50, 30, 70, 20, 40, 60, 80]
