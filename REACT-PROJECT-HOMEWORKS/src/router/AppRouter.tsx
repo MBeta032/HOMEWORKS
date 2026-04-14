@@ -4,7 +4,7 @@ import Register from "../pages/Register"
 import Home from "../pages/Home"
 import { PrivateRoute } from "./PrivateRoute"
 import { MenuTree } from "../pages/MenuTree"
-
+import { MenuTreeProvider } from "../context/MenuTreeContext"
 
 function AppRouter() {
   return (
@@ -25,8 +25,8 @@ function AppRouter() {
           />
         </Route>
 
-        <Route path="/" element={<Navigate to="/home" replace />} />
-        <Route path="*" element={<Navigate to="/home" replace />} />
+        <Route path="/" element={<Navigate to="/login" replace />} />
+        <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
     </BrowserRouter>
   )

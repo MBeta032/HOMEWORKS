@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom"
 import { signOut } from "firebase/auth"
 import { auth } from "../../Firebase/config"
 import { useAuth } from "../../hooks/useAuth"
+import Button from "./Button"
 
 export default function Header() {
   const navigate = useNavigate()
@@ -11,6 +12,10 @@ export default function Header() {
     navigate("/home")
   }
 
+  const goToMenuTree = () => {
+    navigate("/menu-tree")
+  }
+
   const handleLogout = async () => {
     await signOut(auth)
     navigate("/login")
@@ -18,15 +23,23 @@ export default function Header() {
 
   return (
     <header className="app-header">
-      <div className="app-header-left">
-        <p>
-          Usuario actual: <strong>{user?.email}</strong>
-        </p>
+      <div className="header-brand">
+        <strong>Menu Tree App</strong>
+        <span>{user?.email ?? "Sin usuario"}</span>
       </div>
 
-      <div className="app-header-actions">
-        <button onClick={goToHome}>Volver al Home</button>
-        <button onClick={handleLogout}>Logout</button>
+      <div className="header-actions">
+        <Button onClick={goToHome} className="secondary-button">
+          Volver al Home
+        </Button>
+
+        <Button onClick={goToMenuTree} className="secondary-button">
+          Menu Tree
+        </Button>
+
+        <Button onClick={handleLogout} className="danger-button">
+          Logout
+        </Button>
       </div>
     </header>
   )

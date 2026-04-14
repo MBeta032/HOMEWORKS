@@ -55,6 +55,11 @@ button {
   margin: 18px 0;
 }
 
+.auth-form div {
+  display: grid;
+  gap: 8px;
+}
+
 .auth-input {
   width: 100%;
   padding: 12px 14px;
@@ -115,6 +120,7 @@ button {
 
 .error-message {
   color: #b91c1c;
+  margin-top: 12px;
 }
 
 .status-message {

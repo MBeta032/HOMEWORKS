@@ -1,11 +1,11 @@
-import { useEffect } from 'react'
-import { useLocation } from 'react-router-dom'
-import { MenuContent } from '../components/menu-tree/MenuContent'
-import { SidebarMenu } from '../components/menu-tree/SideBarMenu'
-import { TraversalResults } from '../components/menu-tree/TraversalResults'
-import Header from '../components/shared/Header'
-import Button from '../components/shared/Button'
-import { useMenuTree } from '../context/MenuTreeContext'
+import { useEffect } from "react"
+import { useLocation } from "react-router-dom"
+import { MenuContent } from "../components/menu-tree/MenuContent"
+import { SidebarMenu } from "../components/menu-tree/SideBarMenu"
+import { TraversalResults } from "../components/menu-tree/TraversalResults"
+import Header from "../components/shared/Header"
+import Button from "../components/shared/Button"
+import { useMenuTree } from "../context/MenuTreeContext"
 
 function MenuTree() {
   const location = useLocation()
@@ -24,10 +24,10 @@ function MenuTree() {
   const currentItem = getItemByLink(location.pathname)
 
   useEffect(() => {
-    console.log('DFS:', dfsValues.map(item => item.title))
-    console.log('BFS:', bfsValues.map(item => item.title))
-    console.log('Jerarquía:')
-    console.log(hierarchyLines.join('\n'))
+    console.log("DFS:", dfsValues.map(item => item.title))
+    console.log("BFS:", bfsValues.map(item => item.title))
+    console.log("Jerarquía:")
+    console.log(hierarchyLines.join("\n"))
   }, [dfsValues, bfsValues, hierarchyLines])
 
   if (loading) {
