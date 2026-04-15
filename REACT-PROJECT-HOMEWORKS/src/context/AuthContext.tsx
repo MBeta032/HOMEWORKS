@@ -1,5 +1,11 @@
-import { createContext, useContext, useEffect, useState, type ReactNode } from "react"
-import {createUserWithEmailAndPassword,onAuthStateChanged,signInWithEmailAndPassword,signOut, type User} from "firebase/auth"
+import { createContext, useEffect, useState, type ReactNode } from "react"
+import {
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  signOut,
+  type User,
+} from "firebase/auth"
 import { auth } from "../Firebase/config"
 
 interface AuthContextType {
@@ -10,7 +16,7 @@ interface AuthContextType {
   logout: () => Promise<void>
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined)
+export const AuthContext = createContext<AuthContextType | null>(null)
 
 interface AuthProviderProps {
   children: ReactNode
@@ -46,14 +52,4 @@ export function AuthProvider({ children }: AuthProviderProps) {
       {children}
     </AuthContext.Provider>
   )
-}
-
-export function useAuthContext() {
-  const context = useContext(AuthContext)
-
-  if (!context) {
-    throw new Error("useAuthContext debe usarse dentro de AuthProvider")
-  }
-
-  return context
 }

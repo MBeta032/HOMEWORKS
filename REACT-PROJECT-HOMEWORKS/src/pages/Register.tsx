@@ -1,22 +1,22 @@
 import { useState } from "react"
+import { Link, useNavigate } from "react-router-dom"
 import { useAuth } from "../hooks/useAuth"
 
 export default function Register() {
-  const { register } = useAuth()
+  const { register, logout } = useAuth()
+  const navigate = useNavigate()
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
-  const [success, setSuccess] = useState("")
-  const [isSubmitting, setIsSubmitting] = useState(false)
 
-  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-
+  async function handleSubmit(e: any) {
+    e.preventDefault()
     setError("")
-    setSuccess("")
 
-    if (!email || !password) {
+    const cleanEmail = email.trim()
+
+    if (!cleanEmail || !password) {
       setError("Todos los campos son obligatorios")
       return
     }
@@ -27,15 +27,21 @@ export default function Register() {
     }
 
     try {
-      setIsSubmitting(true)
-      await register(email, password)
-      setSuccess("Usuario registrado correctamente")
-      setEmail("")
-      setPassword("")
-    } catch (error) {
-      setError("No se pudo registrar el usuario")
-    } finally {
-      setIsSubmitting(false)
+      await register(cleanEmail, password)
+      await logout()
+      navigate("/login")
+    } catch (error: any) {
+      console.log("REGISTER ERROR:", error.code, error.message)
+
+      if (error.code === "auth/email-already-in-use") {
+        setError("Ese correo ya está registrado")
+      } else if (error.code === "auth/invalid-email") {
+        setError("El correo no es válido")
+      } else if (error.code === "auth/weak-password") {
+        setError("La contraseña es muy débil")
+      } else {
+        setError("No se pudo registrar el usuario")
+      }
     }
   }
 
@@ -52,7 +58,7 @@ export default function Register() {
               type="email"
               placeholder="correo@ejemplo.com"
               value={email}
-              onChange={event => setEmail(event.target.value)}
+              onChange={e => setEmail(e.target.value)}
             />
           </div>
 
@@ -63,17 +69,18 @@ export default function Register() {
               type="password"
               placeholder="Mínimo 8 caracteres"
               value={password}
-              onChange={event => setPassword(event.target.value)}
+              onChange={e => setPassword(e.target.value)}
             />
           </div>
 
-          {error && <p>{error}</p>}
-          {success && <p>{success}</p>}
+          {error && <p className="error-message">{error}</p>}
 
-          <button type="submit" disabled={isSubmitting}>
-            {isSubmitting ? "Registrando..." : "Registrarse"}
-          </button>
+          <button type="submit">Registrarse</button>
         </form>
+
+        <p className="auth-switch">
+          ¿Ya tienes cuenta? <Link to="/login">Inicia sesión</Link>
+        </p>
       </section>
     </main>
   )

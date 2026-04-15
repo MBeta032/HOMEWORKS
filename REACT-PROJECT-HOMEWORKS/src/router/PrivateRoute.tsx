@@ -8,7 +8,11 @@ function PrivateRoute() {
     return <p className="status-message">Cargando sesión...</p>
   }
 
-  return user ? <Outlet /> : <Navigate to="/login" replace />
+  if (!user) {
+    return <Navigate to="/login" replace />
+  }
+
+  return <Outlet />
 }
 
 export { PrivateRoute }

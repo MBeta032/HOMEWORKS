@@ -1,31 +1,43 @@
 import { useState } from "react"
+import { Link, useNavigate } from "react-router-dom"
 import { useAuth } from "../hooks/useAuth"
 
 export default function Login() {
   const { login } = useAuth()
+  const navigate = useNavigate()
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
-  const [isSubmitting, setIsSubmitting] = useState(false)
 
-  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-
+  async function handleSubmit(e: any) {
+    e.preventDefault()
     setError("")
 
-    if (!email || !password) {
+    const cleanEmail = email.trim()
+
+    if (!cleanEmail || !password) {
       setError("Todos los campos son obligatorios")
       return
     }
 
     try {
-      setIsSubmitting(true)
-      await login(email, password)
-    } catch (error) {
-      setError("Correo o contraseña incorrectos")
-    } finally {
-      setIsSubmitting(false)
+      await login(cleanEmail, password)
+      navigate("/dashboard")
+    } catch (error: any) {
+      console.log("LOGIN ERROR:", error.code, error.message)
+
+      if (
+        error.code === "auth/invalid-credential" ||
+        error.code === "auth/wrong-password" ||
+        error.code === "auth/user-not-found"
+      ) {
+        setError("Correo o contraseña incorrectos")
+      } else if (error.code === "auth/invalid-email") {
+        setError("El correo no es válido")
+      } else {
+        setError("No se pudo iniciar sesión")
+      }
     }
   }
 
@@ -42,7 +54,7 @@ export default function Login() {
               type="email"
               placeholder="correo@ejemplo.com"
               value={email}
-              onChange={event => setEmail(event.target.value)}
+              onChange={e => setEmail(e.target.value)}
             />
           </div>
 
@@ -53,16 +65,18 @@ export default function Login() {
               type="password"
               placeholder="Tu contraseña"
               value={password}
-              onChange={event => setPassword(event.target.value)}
+              onChange={e => setPassword(e.target.value)}
             />
           </div>
 
-          {error && <p>{error}</p>}
+          {error && <p className="error-message">{error}</p>}
 
-          <button type="submit" disabled={isSubmitting}>
-            {isSubmitting ? "Ingresando..." : "Ingresar"}
-          </button>
+          <button type="submit">Ingresar</button>
         </form>
+
+        <p className="auth-switch">
+          ¿No tienes cuenta? <Link to="/register">Regístrate</Link>
+        </p>
       </section>
     </main>
   )
