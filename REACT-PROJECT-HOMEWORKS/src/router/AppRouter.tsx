@@ -1,35 +1,19 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
+import { Navigate, Route, Routes } from "react-router-dom"
+import Dashboard from "../pages/Dashboard"
 import Login from "../pages/Login"
 import Register from "../pages/Register"
-import Home from "../pages/Home"
 import { PrivateRoute } from "./PrivateRoute"
-import { MenuTree } from "../pages/MenuTree"
-import { MenuTreeProvider } from "../context/MenuTreeContext"
 
-function AppRouter() {
+export default function AppRouter() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+    <Routes>
+      <Route path="/" element={<Navigate to="/login" replace />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="/login" element={<Login />} />
 
-        <Route element={<PrivateRoute />}>
-          <Route path="/home" element={<Home />} />
-          <Route
-            path="/menu-tree/*"
-            element={
-              <MenuTreeProvider>
-                <MenuTree />
-              </MenuTreeProvider>
-            }
-          />
-        </Route>
-
-        <Route path="/" element={<Navigate to="/login" replace />} />
-        <Route path="*" element={<Navigate to="/login" replace />} />
-      </Routes>
-    </BrowserRouter>
+      <Route element={<PrivateRoute />}>
+        <Route path="/dashboard" element={<Dashboard />} />
+      </Route>
+    </Routes>
   )
 }
-
-export default AppRouter
