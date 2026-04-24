@@ -1,214 +1,235 @@
+@import url("https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:ital,wght@0,200..800;1,200..800&display=swap");
+@import "react-toastify/dist/ReactToastify.css";
+
 * {
-  box-sizing: border-box;
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-  font-family: Arial, Helvetica, sans-serif;
-  background-color: #0a1633;
-  color: white;
-}
-
-a {
-  color: #7db7ff;
-  text-decoration: none;
+  font-family: "Atkinson Hyperlegible Next", sans-serif;
+  background: linear-gradient(135deg, #eef7ff 0%, #f8fafc 45%, #eef2ff 100%);
+  color: #1f2937;
+  min-height: 100vh;
 }
 
 button,
 input,
 select {
-  font: inherit;
+  font-family: inherit;
 }
 
 button {
-  border: none;
-  padding: 12px 16px;
-  border-radius: 8px;
   cursor: pointer;
 }
 
-input,
-select {
+/* Página */
+.page {
   width: 100%;
-  padding: 12px;
-  border: 1px solid #2e4d88;
-  border-radius: 8px;
-  background-color: #0e2048;
-  color: white;
+  max-width: 1250px;
+  margin: 0 auto;
+  padding: 28px;
 }
 
-.auth-page {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+/* Header */
+.header {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 18px;
   padding: 24px;
-}
-
-.auth-card {
-  width: 100%;
-  max-width: 450px;
-  background-color: #0d1e45;
-  border: 1px solid #1f3566;
-  border-radius: 16px;
-  padding: 32px;
-}
-
-.auth-card h1 {
-  text-align: center;
   margin-bottom: 24px;
-  font-size: 42px;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
 }
 
-.auth-form {
+.header h1 {
+  font-size: 32px;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 6px;
+}
+
+.header p {
+  color: #64748b;
+  font-size: 16px;
+}
+
+/* Layout */
+.layout {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.side-panel {
   display: flex;
   flex-direction: column;
   gap: 18px;
 }
 
-.auth-form div {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.auth-form button {
-  background-color: #2f67e8;
-  color: white;
-  margin-top: 10px;
-}
-
-.auth-switch {
-  margin-top: 18px;
-  text-align: center;
-}
-
-.error-message {
-  color: #ffb0b0;
-  text-align: center;
-}
-
-.status-message {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.dashboard-page {
-  min-height: 100vh;
-  padding: 24px;
-}
-
-.dashboard-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #0d1e45;
-  border: 1px solid #1f3566;
-  border-radius: 12px;
+/* Cards */
+.card {
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid #e5e7eb;
+  border-radius: 18px;
   padding: 20px;
-  margin-bottom: 20px;
+  box-shadow: 0 8px 22px rgba(15, 23, 42, 0.08);
 }
 
-.dashboard-header h1 {
+.card h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 14px;
+}
+
+.card h3 {
+  font-size: 17px;
+  font-weight: 700;
+  color: #1e293b;
   margin-bottom: 8px;
 }
 
-.dashboard-header button {
-  background-color: #c43b3b;
-  color: white;
-}
-
-.dashboard-content {
-  display: grid;
-  grid-template-columns: 320px 1fr;
-  gap: 20px;
-}
-
-.panel-card {
-  background-color: #0d1e45;
-  border: 1px solid #1f3566;
-  border-radius: 12px;
-  padding: 20px;
-}
-
-.panel-card h2 {
-  margin-bottom: 16px;
-}
-
-.node-form {
+/* Formularios */
+.form {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
-.node-form div {
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 11px 12px;
+  border-radius: 10px;
+  border: 1px solid #cbd5e1;
+  background-color: #f8fafc;
+  color: #0f172a;
+  font-size: 14px;
+  outline: none;
+  transition: 0.2s ease;
+}
+
+.form-group input::placeholder {
+  color: #94a3b8;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #0ea5e9;
+  background-color: white;
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.18);
+}
+
+/* Button */
+.button {
+  background-color: #0ea5e9;
+  color: white;
+  padding: 10px 16px;
+  border-radius: 10px;
+  border: none;
+  font-weight: 700;
+  transition: 0.2s ease;
+}
+
+.button:hover {
+  background-color: #0369a1;
+}
+
+.button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Lista de personas */
+.people-list {
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.people-list p {
+  color: #64748b;
+  font-size: 14px;
+}
+
+.people-list ul {
   display: flex;
   flex-direction: column;
   gap: 8px;
-}
-
-.node-form button {
-  background-color: #2f67e8;
-  color: white;
-}
-
-.tree-root,
-.tree-children {
-  list-style: none;
-  padding-left: 0;
-}
-
-.tree-children {
-  margin-left: 20px;
   margin-top: 10px;
-  padding-left: 14px;
-  border-left: 1px solid #2e4d88;
+  list-style: none;
 }
 
-.tree-node {
-  margin-bottom: 10px;
-}
-
-.tree-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  background-color: #112556;
+.people-list li {
+  background-color: #f1f5f9;
+  border-left: 4px solid #38bdf8;
+  padding: 10px 12px;
   border-radius: 10px;
-  padding: 12px;
+  color: #1e293b;
+  font-weight: 500;
 }
 
-.tree-item.folder {
-  border-left: 4px solid #4c8dff;
+/* Visualizador */
+.graph-container {
+  min-height: 610px;
+  overflow: auto;
 }
 
-.tree-item.file {
-  border-left: 4px solid #28b67a;
+.graph-container p {
+  color: #64748b;
+  font-size: 15px;
 }
 
-.tree-icon {
-  font-size: 20px;
+.graph-container svg {
+  border-radius: 14px;
+  background: radial-gradient(circle at top, #ffffff 0%, #f8fafc 65%);
+  border: 1px solid #e5e7eb;
 }
 
-.tree-info p {
-  font-weight: bold;
+/* Toastify */
+.Toastify__toast {
+  font-family: "Atkinson Hyperlegible Next", sans-serif;
+  border-radius: 12px;
+  font-size: 14px;
 }
 
-.tree-info small {
-  color: #c5d2ef;
+.Toastify__toast--success {
+  background-color: #0ea5e9;
 }
 
-@media (max-width: 900px) {
-  .dashboard-content {
+.Toastify__toast--error {
+  background-color: #ef4444;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .layout {
     grid-template-columns: 1fr;
   }
 
-  .dashboard-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
+  .page {
+    padding: 18px;
+  }
+
+  .header h1 {
+    font-size: 26px;
+  }
+
+  .graph-container {
+    min-height: auto;
   }
 }
