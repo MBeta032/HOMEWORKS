@@ -44,8 +44,7 @@ export default function GraphSearch() {
           <ul>
             {people.map((person) => (
               <li key={person.id}>
-                <span>{person.name}</span>
-                <strong>{person.age} años</strong>
+                <span>{person.name} - <strong>{person.age} años</strong></span>
               </li>
             ))}
           </ul>
