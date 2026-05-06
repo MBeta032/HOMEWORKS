@@ -1,8 +1,12 @@
-export const Header = () => {
+export function Header() {
   return (
     <header className="header">
-      <h1>Challenge 10 - Graphs</h1>
-      <p>Agrega personas y ciudades para crear grupos.</p>
+      <p className="header__tag">Trie + Heap Challenge</p>
+      <h1>Smart Product Search</h1>
+      <p>
+        Busca productos por prefijo y muestra los más populares usando un
+        MaxHeap.
+      </p>
     </header>
   );
-};
+}

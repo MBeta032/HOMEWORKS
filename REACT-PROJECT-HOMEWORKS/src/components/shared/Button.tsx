@@ -1,13 +1,13 @@
-interface Props {
-  text: string;
-  type: "submit" | "button";
-  onClick?: () => void;
+import type { ButtonHTMLAttributes, ReactNode } from "react";
+
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  children: ReactNode;
 }
 
-export const Button = ({ text, type, onClick }: Props) => {
+export function Button({ children, className = "", ...props }: ButtonProps) {
   return (
-    <button type={type} onClick={onClick} className="button">
-      {text}
+    <button className={`button ${className}`} {...props}>
+      {children}
     </button>
   );
-};
+}

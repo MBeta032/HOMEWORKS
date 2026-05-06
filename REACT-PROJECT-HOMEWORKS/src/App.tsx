@@ -1,13 +1,11 @@
-import GraphPage from "./pages/GraphsPage";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { SmartSearchProvider } from "./context/SmartSearchContext";
+import { GraphsPage } from "./pages/GraphsPage";
 
 function App() {
   return (
-    <>
-      <GraphPage />
-      <ToastContainer />
-    </>
+    <SmartSearchProvider>
+      <GraphsPage />
+    </SmartSearchProvider>
   );
 }
 

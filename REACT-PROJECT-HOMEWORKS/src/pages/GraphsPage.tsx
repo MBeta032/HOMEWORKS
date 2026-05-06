@@ -1,26 +1,30 @@
+import { AddProductForm } from "../components/AddProductForm";
+import { ProductLists } from "../components/ProductLists";
+import { ProductResults } from "../components/ProductResults";
+import { SearchBox } from "../components/SearchBox";
 import { Header } from "../components/shared/Header";
-import GraphForm from "../components/GraphForm";
-import GraphSearch from "../components/GraphSearch";
-import GraphVisualizer from "../components/GraphVisualizer";
-import { GraphProvider } from "../context/GraphContext";
+import { useSmartSearchContext } from "../context/SmartSearchContext";
 
-const GraphPage = () => {
+export function GraphsPage() {
+  const { message } = useSmartSearchContext();
+
   return (
-    <GraphProvider>
-      <main className="page">
-        <Header />
+    <main className="page">
+      <Header />
 
-        <section className="layout">
-          <div className="side-panel">
-            <GraphForm />
-            <GraphSearch />
-          </div>
+      {message.length > 0 && <p className="message">{message}</p>}
 
-          <GraphVisualizer />
-        </section>
-      </main>
-    </GraphProvider>
+      <section className="page__content">
+        <div className="page__column">
+          <AddProductForm />
+          <ProductLists />
+        </div>
+
+        <div className="page__column">
+          <SearchBox />
+          <ProductResults />
+        </div>
+      </section>
+    </main>
   );
-};
-
-export default GraphPage;
+}
