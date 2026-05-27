@@ -1,7 +1,17 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Badge } from "./Badge";
+import { Button } from "./Button";
+import { useAuth } from "../../hooks/useAuth";
 
 export function Navbar() {
+  const navigate = useNavigate();
+  const { user, logout } = useAuth();
+
+  const handleLogout = async (): Promise<void> => {
+    await logout();
+    navigate("/login", { replace: true });
+  };
+
   return (
     <header className="navbar">
       <Link to="/" className="navbar__brand">
@@ -14,9 +24,10 @@ export function Navbar() {
       </Link>
 
       <div className="navbar__badges">
-        <Badge variant="tech">Música</Badge>
-        <Badge variant="tech">Ranking</Badge>
-        <Badge variant="tech">Recomendaciones</Badge>
+        {user !== null && <Badge variant="tech">{user.email}</Badge>}
+        <Button variant="secondary" onClick={handleLogout}>
+          Cerrar sesión
+        </Button>
       </div>
     </header>
   );

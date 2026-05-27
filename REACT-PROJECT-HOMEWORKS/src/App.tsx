@@ -1,11 +1,14 @@
+import { AuthProvider } from "./context/AuthContext";
 import { MusicProvider } from "./context/MusicContext";
 import { AppRouter } from "./router/AppRouter";
 
 function App() {
   return (
-    <MusicProvider>
-      <AppRouter />
-    </MusicProvider>
+    <AuthProvider>
+      <MusicProvider>
+        <AppRouter />
+      </MusicProvider>
+    </AuthProvider>
   );
 }
 
