@@ -1,12 +1,11 @@
-import { MusicProvider } from "./context/MusicContext";
-import { AppRouter } from "./router/AppRouter";
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import App from "./App";
+import "./styles/index.css";
+import "./styles/MusicDashboard.scss";
 
-function App() {
-  return (
-    <MusicProvider>
-      <AppRouter />
-    </MusicProvider>
-  );
-}
-
-export default App;
+createRoot(document.getElementById("root")!).render(
+  <StrictMode>
+    <App />
+  </StrictMode>
+);

@@ -4,7 +4,8 @@ import { MaxHeap } from "../algorithms/MaxHeap";
 import { Graph } from "../algorithms/Graph";
 import { songs, songRelations } from "../data/songs.data";
 import type { Song, SongRelation } from "../interfaces/song.interface";
-import { showInfoToast, showSuccessToast, showWarningToast } from "../utils/alerts";
+import { showInfoToast, showSuccessToast, showWarningToast} from "../utils/alerts";
+
 
 const TOP_SONGS_LIMIT = 8;
 
