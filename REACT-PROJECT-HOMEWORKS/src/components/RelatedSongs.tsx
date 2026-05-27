@@ -1,25 +1,21 @@
 import type { ChangeEvent } from "react";
 import type { Song } from "../interfaces/song.interface";
+import { useMusic } from "../hooks/useMusic";
 import { EmptyState } from "./shared/EmptyState";
 import { SongCard } from "./SongCard";
 
-interface RelatedSongsProps {
-  songs: Song[];
-  selectedSongId: string;
-  relatedSongs: Song[];
-  onSelectSong: (songId: string) => void;
-}
+export function RelatedSongs() {
+  const {
+    songs,
+    selectedSongId,
+    relatedSongs,
+    handleSelectRelatedSong,
+  } = useMusic();
 
-export function RelatedSongs({
-  songs,
-  selectedSongId,
-  relatedSongs,
-  onSelectSong,
-}: RelatedSongsProps) {
   const handleSelectChange = (
     event: ChangeEvent<HTMLSelectElement>
   ): void => {
-    onSelectSong(event.target.value);
+    handleSelectRelatedSong(event.target.value);
   };
 
   const selectedSong = songs.find((song: Song) => song.id === selectedSongId);

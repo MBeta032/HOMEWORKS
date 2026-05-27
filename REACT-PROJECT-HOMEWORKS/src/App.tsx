@@ -1,12 +1,12 @@
-import { BrowserRouter } from "react-router-dom"
-import AppRouter from "./router/AppRouter"
+import { MusicProvider } from "./context/MusicContext";
+import { AppRouter } from "./router/AppRouter";
 
 function App() {
   return (
-    <BrowserRouter>
+    <MusicProvider>
       <AppRouter />
-    </BrowserRouter>
-  )
+    </MusicProvider>
+  );
 }
 
-export default App
+export default App;

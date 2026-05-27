@@ -1,13 +1,12 @@
-import type { Song } from "../interfaces/song.interface";
+import { useMusic } from "../hooks/useMusic";
 import { EmptyState } from "./shared/EmptyState";
 import { SongCard } from "./SongCard";
+import type { Song } from "../interfaces/song.interface";
 
-interface RankingListProps {
-  songs: Song[];
-}
+export function RankingList() {
+  const { topSongs } = useMusic();
 
-export function RankingList({ songs }: RankingListProps) {
-  if (songs.length === 0) {
+  if (topSongs.length === 0) {
     return (
       <EmptyState
         message="Todavía no hay canciones para mostrar."
@@ -18,7 +17,7 @@ export function RankingList({ songs }: RankingListProps) {
 
   return (
     <div className="ranking-list">
-      {songs.map((song: Song, index: number) => (
+      {topSongs.map((song: Song, index: number) => (
         <SongCard key={song.id} song={song} rank={index + 1} />
       ))}
     </div>

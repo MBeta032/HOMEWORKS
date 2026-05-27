@@ -1,22 +1,24 @@
+import { NavLink } from "react-router-dom";
+
 interface SidebarItem {
-  id: string;
+  path: string;
   label: string;
   description: string;
 }
 
 const sidebarItems: SidebarItem[] = [
   {
-    id: "search",
+    path: "/buscar",
     label: "Buscar música",
     description: "Encuentra canciones rápidamente",
   },
   {
-    id: "ranking",
+    path: "/ranking",
     label: "Más populares",
     description: "Consulta las canciones destacadas",
   },
   {
-    id: "related",
+    path: "/recomendaciones",
     label: "Recomendaciones",
     description: "Descubre canciones similares",
   },
@@ -28,11 +30,30 @@ export function Sidebar() {
       <h2>Menú</h2>
 
       <nav className="sidebar__nav">
+        <NavLink
+          to="/"
+          end
+          className={({ isActive }) =>
+            isActive ? "sidebar__item sidebar__item--active" : "sidebar__item"
+          }
+        >
+          <strong>Inicio</strong>
+          <span>Resumen general</span>
+        </NavLink>
+
         {sidebarItems.map((item: SidebarItem) => (
-          <a key={item.id} href={`#${item.id}`} className="sidebar__item">
+          <NavLink
+            key={item.path}
+            to={item.path}
+            className={({ isActive }) =>
+              isActive
+                ? "sidebar__item sidebar__item--active"
+                : "sidebar__item"
+            }
+          >
             <strong>{item.label}</strong>
             <span>{item.description}</span>
-          </a>
+          </NavLink>
         ))}
       </nav>
     </aside>

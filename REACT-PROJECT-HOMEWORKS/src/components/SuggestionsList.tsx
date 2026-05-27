@@ -1,15 +1,10 @@
+import { useMusic } from "../hooks/useMusic";
 import { Button } from "./shared/Button";
 import { EmptyState } from "./shared/EmptyState";
 
-interface SuggestionsListProps {
-  suggestions: string[];
-  onSelectSuggestion: (title: string) => void;
-}
+export function SuggestionsList() {
+  const { suggestions, handleSelectSuggestion } = useMusic();
 
-export function SuggestionsList({
-  suggestions,
-  onSelectSuggestion,
-}: SuggestionsListProps) {
   if (suggestions.length === 0) {
     return (
       <EmptyState
@@ -25,7 +20,7 @@ export function SuggestionsList({
         <Button
           key={title}
           variant="ghost"
-          onClick={() => onSelectSuggestion(title)}
+          onClick={() => handleSelectSuggestion(title)}
         >
           {title}
         </Button>

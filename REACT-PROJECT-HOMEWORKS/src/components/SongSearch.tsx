@@ -1,23 +1,12 @@
-import { useState } from "react";
+import type { ChangeEvent } from "react";
+import { useMusic } from "../hooks/useMusic";
 
-interface SongSearchProps {
-  onSearchTextChange: (text: string) => void;
-  exactMatch: boolean;
-  suggestionsCount: number;
-}
+export function SongSearch() {
+  const { searchText, handleSearchTextChange, exactMatch, suggestions } =
+    useMusic();
 
-export function SongSearch({
-  onSearchTextChange,
-  exactMatch,
-  suggestionsCount,
-}: SongSearchProps) {
-  const [searchText, setSearchText] = useState<string>("");
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    const value = event.target.value;
-
-    setSearchText(value);
-    onSearchTextChange(value);
+  const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
+    handleSearchTextChange(event.target.value);
   };
 
   const hasText = searchText.trim().length > 0;
@@ -47,9 +36,9 @@ export function SongSearch({
           )}
 
           <small>
-            {suggestionsCount === 1
+            {suggestions.length === 1
               ? "1 sugerencia disponible"
-              : `${suggestionsCount} sugerencias disponibles`}
+              : `${suggestions.length} sugerencias disponibles`}
           </small>
         </div>
       )}
