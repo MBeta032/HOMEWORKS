@@ -5,6 +5,7 @@ import { RankingPage } from "../pages/RankingPage";
 import { RecommendationsPage } from "../pages/RecomendationsPage";
 import { LoginPage } from "../pages/LoginPage";
 import { RegisterPage } from "../pages/RegisterPage";
+import { AddSongPage } from "../pages/AddSongPage";
 import { PrivateRoute } from "./PrivateRoute";
 
 export function AppRouter() {
@@ -46,6 +47,15 @@ export function AppRouter() {
           element={
             <PrivateRoute>
               <RecommendationsPage />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/agregar"
+          element={
+            <PrivateRoute>
+              <AddSongPage />
             </PrivateRoute>
           }
         />

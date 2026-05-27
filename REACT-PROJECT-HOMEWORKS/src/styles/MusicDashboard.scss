@@ -653,3 +653,27 @@ $shadow-card: 0 18px 40px rgba(0, 0, 0, 0.28);
   background: $color-bg;
   color: $color-text;
 }
+
+.song-form {
+  display: grid;
+  gap: 18px;
+
+  &__group {
+    display: grid;
+    gap: 8px;
+
+    label {
+      color: $color-text;
+      font-weight: 700;
+    }
+
+    input,
+    select {
+      @include input-control;
+    }
+  }
+
+  .button {
+    justify-self: start;
+  }
+}

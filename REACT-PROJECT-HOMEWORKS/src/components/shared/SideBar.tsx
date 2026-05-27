@@ -22,6 +22,11 @@ const sidebarItems: SidebarItem[] = [
     label: "Recomendaciones",
     description: "Descubre canciones similares",
   },
+  {
+    path: "/agregar",
+    label: "Agregar canción",
+    description: "Registra una canción nueva",
+  },
 ];
 
 export function Sidebar() {
