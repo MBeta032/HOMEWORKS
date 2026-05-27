@@ -4,6 +4,7 @@ import { MaxHeap } from "../algorithms/MaxHeap";
 import { Graph } from "../algorithms/Graph";
 import { songs, songRelations } from "../data/songs.data";
 import type { Song, SongRelation } from "../interfaces/song.interface";
+import { showInfoToast, showSuccessToast, showWarningToast } from "../utils/alerts";
 
 const TOP_SONGS_LIMIT = 8;
 
@@ -80,35 +81,49 @@ export function MusicProvider({ children }: MusicProviderProps) {
 
   const relatedSongs =
     selectedSongId.length > 0 ? songGraph.getRelatedSongs(selectedSongId) : [];
-
+    
   const handleSearchTextChange = (text: string): void => {
-    const cleanText = text.trim();
+  const cleanText = text.trim();
 
-    setSearchText(text);
+  setSearchText(text);
 
-    if (cleanText.length === 0) {
-      setSuggestions([]);
-      setExactMatch(false);
-      return;
-    }
+  if (cleanText.length === 0) {
+    setSuggestions([]);
+    setExactMatch(false);
+    return;
+  }
 
-    setExactMatch(songTrie.search(cleanText));
-    setSuggestions(songTrie.getSuggestions(cleanText));
-  };
+  const foundExactMatch = songTrie.search(cleanText);
+  const foundSuggestions = songTrie.getSuggestions(cleanText);
+
+  setExactMatch(foundExactMatch);
+  setSuggestions(foundSuggestions);
+
+  if (cleanText.length >= 3 && foundSuggestions.length === 0) {
+    showWarningToast("No encontramos canciones con esa búsqueda.");
+  }
+};
 
   const handleSelectSuggestion = (title: string): void => {
-    handleSearchTextChange(title);
+  handleSearchTextChange(title);
 
-    const selectedSong = findSongByTitle(title);
+  const selectedSong = findSongByTitle(title);
 
-    if (selectedSong !== null) {
-      setSelectedSongId(selectedSong.id);
-    }
-  };
+  if (selectedSong !== null) {
+    setSelectedSongId(selectedSong.id);
+    showSuccessToast(`${selectedSong.title} fue seleccionada.`);
+  }
+};
 
   const handleSelectRelatedSong = (songId: string): void => {
-    setSelectedSongId(songId);
-  };
+  setSelectedSongId(songId);
+
+  const selectedSong = songs.find((song: Song) => song.id === songId);
+
+  if (selectedSong !== undefined) {
+    showInfoToast(`Mostrando recomendaciones para ${selectedSong.title}.`);
+  }
+};
 
   const value: MusicContextValue = {
     songs,
